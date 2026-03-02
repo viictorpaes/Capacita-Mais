@@ -21,3 +21,9 @@ export class UsersController {
     return this.usersService.findOne(id);
   }
 }
+
+
+// adicionar os últimos dois métodos: input e delete
+// tanto no users como no courses.
+
+// código em andamento
