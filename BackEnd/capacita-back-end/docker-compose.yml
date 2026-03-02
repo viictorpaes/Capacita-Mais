@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: capacita_postgres
+    environment:
+      POSTGRES_USER: capacita_user
+      POSTGRES_PASSWORD: capacita_password
+      POSTGRES_DB: capacita_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - capacita_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U capacita_user -d capacita_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+
+networks:
+  capacita_network:
+    driver: bridge
