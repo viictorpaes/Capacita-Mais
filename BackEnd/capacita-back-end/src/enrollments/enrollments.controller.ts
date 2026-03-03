@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Param,
+  Patch,
+  Delete,
+} from '@nestjs/common';
+
 import { CreateEnrollmentDto } from './dto/create-enrollment.dto';
 import { EnrollmentsService } from './enrollments.service';
 
@@ -14,5 +23,25 @@ export class EnrollmentsController {
   @Get()
   findAll() {
     return this.enrollmentsService.findAll();
+  }
+
+  @Get('user/:userId')
+  findByUserId(@Param('userId') userId: string) {
+    return this.enrollmentsService.findByUserId(+userId);
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.enrollmentsService.findOne(+id);
+  }
+
+  @Patch(':id/cancel')
+  cancel(@Param('id') id: string) {
+    return this.enrollmentsService.cancel(+id);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.enrollmentsService.remove(+id);
   }
 }
