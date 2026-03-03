@@ -10,7 +10,9 @@ import { CreateEnrollmentDto } from './dto/create-enrollment.dto';
 
 @Injectable()
 export class EnrollmentsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {
+
+  }
 
   async create(createEnrollmentDto: CreateEnrollmentDto) {
     const { userId, courseId } = createEnrollmentDto;
@@ -47,7 +49,9 @@ export class EnrollmentsService {
           courseId,
         },
       },
+
       select: { id: true },
+
     });
 
     if (existingEnrollment) {
@@ -59,6 +63,7 @@ export class EnrollmentsService {
     return this.prisma.enrollment.create({
       data: createEnrollmentDto,
       include: {
+
         user: {
           select: {
             id: true,
@@ -66,6 +71,7 @@ export class EnrollmentsService {
             email: true,
           },
         },
+
         course: {
           select: {
             id: true,
@@ -82,6 +88,7 @@ export class EnrollmentsService {
   async findAll() {
     return this.prisma.enrollment.findMany({
       include: {
+
         user: {
           select: {
             id: true,
@@ -89,6 +96,7 @@ export class EnrollmentsService {
             email: true,
           },
         },
+
         course: {
           select: {
             id: true,
@@ -98,6 +106,7 @@ export class EnrollmentsService {
           },
         },
       },
+      
       orderBy: { enrolledAt: 'desc' },
     });
   }
