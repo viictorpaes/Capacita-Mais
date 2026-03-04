@@ -26,18 +26,18 @@ export class EnrollmentsController {
 
  @Get('user/:userId')
   findByUser(@Param('userId') userId: string) {
-  return this.enrollmentsService.findByUser(Number(userId));}
+  return this.enrollmentsService.findByUser(userId);}
 
   @Get(':id')
-    findOne(@Param('id') id: string) {
-    return this.enrollmentsService.findOne(Number(id));}
+  findOne(@Param('id') id: string) {
+  return this.enrollmentsService.findOne(id);}
 
   @Patch(':id/cancel')
-    cancel(@Param('id') id: string) {
-    return this.enrollmentsService.cancel(Number(id));}
+  cancel(@Param('id') id: string) {
+  return this.enrollmentsService.cancel(id);}
 
   @Delete(':id')
-    remove(@Param('id') id: string) {
-    return this.enrollmentsService.remove(Number(id));}
+  remove(@Param('id') id: string) {
+  return this.enrollmentsService.remove(id);}
     
 }

@@ -111,7 +111,7 @@ export class EnrollmentsService {
     });
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     const enrollment = await this.prisma.enrollment.findUnique({
       where: { id },
       include: {
@@ -127,7 +127,7 @@ export class EnrollmentsService {
     return enrollment;
   }
 
-  async findByUser(userId: number) {
+  async findByUser(userId: string) {
     return this.prisma.enrollment.findMany({
       where: { userId },
       include: {
@@ -137,7 +137,7 @@ export class EnrollmentsService {
     });
   }
 
-  async cancel(id: number) {
+  async cancel(id: string) {
     const enrollment = await this.prisma.enrollment.findUnique({
       where: { id },
     });
@@ -146,13 +146,15 @@ export class EnrollmentsService {
       throw new NotFoundException('Matrícula não encontrada.');
     }
 
-    return this.prisma.enrollment.update({
+    // The Enrollment model doesn't have a `status` field in Prisma schema.
+    // We remove the enrollment to "cancel" it (hard delete). If you prefer
+    // a soft-delete, add a status or cancelledAt field to the schema.
+    return this.prisma.enrollment.delete({
       where: { id },
-      data: { status: 'CANCELLED' },
     });
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     const enrollment = await this.prisma.enrollment.findUnique({
       where: { id },
     });
