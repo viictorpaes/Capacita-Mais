@@ -9,8 +9,8 @@ import {
 } from '@nestjs/common';
 
 import { CreateEnrollmentDto } from './dto/create-enrollment.dto';
-
 import { EnrollmentsService } from './enrollments.service';
+
 
 @Controller('enrollments')
 export class EnrollmentsController {
@@ -18,31 +18,26 @@ export class EnrollmentsController {
 
   @Post()
   create(@Body() createEnrollmentDto: CreateEnrollmentDto) {
-    return this.enrollmentsService.create(createEnrollmentDto);
-  }
+    return this.enrollmentsService.create(createEnrollmentDto);}
 
   @Get()
   findAll() {
-    return this.enrollmentsService.findAll();
-  }
+    return this.enrollmentsService.findAll();}
 
-  @Get('user/:userId')
-  findByUserId(@Param('userId') userId: string) {
-    return this.enrollmentsService.findByUserId(+userId);
-  }
+ @Get('user/:userId')
+  findByUser(@Param('userId') userId: string) {
+  return this.enrollmentsService.findByUser(Number(userId));}
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.enrollmentsService.findOne(+id);
-  }
+    findOne(@Param('id') id: string) {
+    return this.enrollmentsService.findOne(Number(id));}
 
   @Patch(':id/cancel')
-  cancel(@Param('id') id: string) {
-    return this.enrollmentsService.cancel(+id);
-  }
+    cancel(@Param('id') id: string) {
+    return this.enrollmentsService.cancel(Number(id));}
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.enrollmentsService.remove(+id);
-  }
+    remove(@Param('id') id: string) {
+    return this.enrollmentsService.remove(Number(id));}
+    
 }
