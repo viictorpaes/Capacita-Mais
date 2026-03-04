@@ -1,5 +1,15 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import 
+{ Body, 
+  Controller, 
+  Delete, 
+  Get, 
+  Param, 
+  Patch, 
+  Post 
+} from '@nestjs/common';
+
 import { CreateUserDto } from './dto/create-user.dto';
+
 import { UsersService } from './users.service';
 
 @Controller('users')
@@ -20,10 +30,16 @@ export class UsersController {
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(id);
   }
-}
 
+  @Patch(':id')
+  update(
+    @Param('id') id: string,
+    @Body() updateUserDto: CreateUserDto
+  ) {
+    return this.usersService.update(id, updateUserDto);
+  }
 
-// adicionar os últimos dois métodos: input e delete
-// tanto no users como no courses.
-
-// código em andamento
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.usersService.remove(id);
+  }
