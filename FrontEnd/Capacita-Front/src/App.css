@@ -218,3 +218,43 @@ body {
     width: 100%; /* Ocupa o espaço disponível na parte roxa */
   }
 }
+
+/* =========================================
+   ESTILOS DO PRELOADER
+   ========================================= */
+
+.preloader-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white; /* Fundo branco limpo igual ao print */
+  position: fixed; /* Fixa por cima de tudo */
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+
+.preloader-logo {
+  width: 150px; /* Ajuste se quiser a logo maior ou menor no preloader */
+  height: auto;
+  /* Chama a animação 'pulse' que criamos abaixo, durando 1.5s, rodando infinitamente */
+  animation: pulse 1.5s infinite ease-in-out; 
+}
+
+/* Criando a animação de pulsar com Keyframes */
+@keyframes pulse {
+  0% {
+    transform: scale(0.9); /* Começa 10% menor */
+    opacity: 0.7;          /* Levemente transparente */
+  }
+  50% {
+    transform: scale(1); /* No meio do tempo, fica 10% maior */
+    opacity: 1;            /* Totalmente visível */
+  }
+  100% {
+    transform: scale(0.9); /* Volta ao tamanho inicial */
+    opacity: 0.7;
+  }
+}

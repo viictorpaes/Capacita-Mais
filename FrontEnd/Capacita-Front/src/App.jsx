@@ -1,31 +1,49 @@
-import { useState } from 'react';
+// 1. Adicionamos o useEffect aqui no import
+import { useState, useEffect } from 'react';
 import './App.css';
 
-// 1. IMPORTANDO AS IMAGENS DA PASTA ASSETS
 import logoImg from './assets/logo.png'; 
 import appleIcon from './assets/icon-apple.png';
 import googleIcon from './assets/icon-google.png';
 import facebookIcon from './assets/icon-facebook.png';
-// (Se você salvou como .png, basta mudar a extensão acima)
 
 function App() {
+  // 2. Criamos um estado para controlar se está carregando ou não (começa como 'true')
+  const [isLoading, setIsLoading] = useState(true);
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  // 3. O useEffect cria um timer que muda o isLoading para 'false' após 2.5 segundos
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2500); // 2500 milissegundos = 2.5 segundos
+
+    return () => clearTimeout(timer); // Limpeza do timer
+  }, []);
 
   const handleLogin = (e) => {
     e.preventDefault();
     console.log("Pronto para enviar para o Back-end:", { email, password });
   };
 
+  // 4. RENDERIZAÇÃO CONDICIONAL: Se isLoading for true, mostra SÓ O PRELOADER
+  if (isLoading) {
+    return (
+      <div className="preloader-container">
+        <img src={logoImg} alt="Carregando..." className="preloader-logo" />
+      </div>
+    );
+  }
+
+  // 5. Se isLoading for false, o código passa direto pelo 'if' e mostra o LOGIN NORMAL
   return (
     <div className="login-container">
       {/* HEADER: LOGO */}
       <div className="login-header">
         <div className="logo">
-          {/* 2. USANDO A IMAGEM DA LOGO AQUI */}
           <img src={logoImg} alt="Logo Capacita Mais" className="logo-img" />
-          {/* Se a sua imagem exportada já tiver o texto "Capacita+", 
-              você pode apagar a tag <h1> abaixo. Se for só o símbolo, mantenha. */}
         </div>
       </div>
 
@@ -70,7 +88,6 @@ function App() {
 
           <div className="divider"></div>
 
-          {/* 3. USANDO OS ÍCONES SOCIAIS AQUI */}
           <div className="social-login">
             <button type="button" className="social-btn">
               <img src={appleIcon} alt="Login com Apple" />
