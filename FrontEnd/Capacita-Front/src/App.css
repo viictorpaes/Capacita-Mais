@@ -190,14 +190,18 @@ body {
 /* --- AJUSTES PARA DESKTOP (Telas maiores que 768px) --- */
 @media (min-width: 768px) {
   .login-container {
-    /* Ponto 1: Deixando mais "quadrado" no desktop */
-    width: 700px; /* Aumentamos bem a largura (era 400px) */
-    height: auto; /* Altura se adapta ao conteúdo (sai o 100vh) */
-    flex-direction: row; /* Coloca logo na esquerda e form na direita */
+    width: 700px;
+    height: auto;
+    flex-direction: row;
     border-radius: 20px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-    overflow: hidden; /* Garante o arredondamento das bordas */
+    overflow: hidden;
+    
+    /* 👇 ADICIONE ESTAS DUAS LINHAS 👇 */
+    margin: 0 auto; /* Centraliza o card perfeitamente na horizontal */
   }
+
+  /* ... resto do código continua igual ... */
 
   .login-header {
     flex: 1;

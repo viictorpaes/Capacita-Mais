@@ -1,34 +1,44 @@
-// 1. Adicionamos o useEffect aqui no import
 import { useState, useEffect } from 'react';
 import './App.css';
 
+// 👇 1. AQUI: Importamos a tela Home que acabamos de criar
+import Home from './pages/home'; 
+
+// Importações de imagens do login
 import logoImg from './assets/logo.png'; 
 import appleIcon from './assets/icon-apple.png';
 import googleIcon from './assets/icon-google.png';
 import facebookIcon from './assets/icon-facebook.png';
 
 function App() {
-  // 2. Criamos um estado para controlar se está carregando ou não (começa como 'true')
   const [isLoading, setIsLoading] = useState(true);
+  
+  // 👇 2. AQUI: Criamos a variável que diz se o usuário está logado (começa falso)
+  const [isLoggedIn, setIsLoggedIn] = useState(false); 
   
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // 3. O useEffect cria um timer que muda o isLoading para 'false' após 2.5 segundos
+  // Temporizador do Preloader
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2500); // 2500 milissegundos = 2.5 segundos
-
-    return () => clearTimeout(timer); // Limpeza do timer
+    }, 2500);
+    return () => clearTimeout(timer);
   }, []);
 
+  // Função que roda quando clicamos no botão "Entrar"
   const handleLogin = (e) => {
     e.preventDefault();
     console.log("Pronto para enviar para o Back-end:", { email, password });
+    
+    // 👇 3. AQUI: Quando o botão Entrar for clicado, mudamos para VERDADEIRO
+    setIsLoggedIn(true); 
   };
 
-  // 4. RENDERIZAÇÃO CONDICIONAL: Se isLoading for true, mostra SÓ O PRELOADER
+  // --- ÁREA DE EXIBIÇÃO DA TELA ---
+
+  // Se estiver carregando, mostra o preloader
   if (isLoading) {
     return (
       <div className="preloader-container">
@@ -37,7 +47,12 @@ function App() {
     );
   }
 
-  // 5. Se isLoading for false, o código passa direto pelo 'if' e mostra o LOGIN NORMAL
+  // 👇 4. AQUI: Se o login for verdadeiro (clicou no botão), mostra a tela HOME e ignora o resto do código!
+  if (isLoggedIn) {
+    return <Home />;
+  }
+
+  // Se o login for falso (padrão), ele chega até aqui e mostra a tela de LOGIN
   return (
     <div className="login-container">
       {/* HEADER: LOGO */}
