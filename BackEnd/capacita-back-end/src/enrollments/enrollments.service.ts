@@ -3,22 +3,31 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+
 import { PrismaService } from '../prisma/prisma.service';
+
 import { CreateEnrollmentDto } from './dto/create-enrollment.dto';
 
 @Injectable()
 export class EnrollmentsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {
+
+  }
 
   async create(createEnrollmentDto: CreateEnrollmentDto) {
     const { userId, courseId } = createEnrollmentDto;
 
     const [user, course] = await Promise.all([
-      this.prisma.user.findUnique({ where: { id: userId }, select: { id: true } }),
-      this.prisma.course.findUnique({
-        where: { id: courseId },
+      this.prisma.user.findUnique({
+        where: { id: userId },
         select: { id: true },
       }),
+
+      this.prisma.course.findUnique({
+        where: { id: courseId },
+        select: { id: true, isPublished: true },
+      }),
+      
     ]);
 
     if (!user) {
@@ -29,6 +38,10 @@ export class EnrollmentsService {
       throw new NotFoundException('Curso não encontrado.');
     }
 
+    if (!course.isPublished) {
+      throw new ConflictException('Curso não está publicado.');
+    }
+
     const existingEnrollment = await this.prisma.enrollment.findUnique({
       where: {
         userId_courseId: {
@@ -36,16 +49,21 @@ export class EnrollmentsService {
           courseId,
         },
       },
+
       select: { id: true },
+
     });
 
     if (existingEnrollment) {
-      throw new ConflictException('Usuário já matriculado neste curso.');
+      throw new ConflictException(
+        'Usuário já matriculado neste curso.',
+      );
     }
 
     return this.prisma.enrollment.create({
       data: createEnrollmentDto,
       include: {
+
         user: {
           select: {
             id: true,
@@ -53,6 +71,7 @@ export class EnrollmentsService {
             email: true,
           },
         },
+
         course: {
           select: {
             id: true,
@@ -69,6 +88,7 @@ export class EnrollmentsService {
   async findAll() {
     return this.prisma.enrollment.findMany({
       include: {
+
         user: {
           select: {
             id: true,
@@ -76,6 +96,7 @@ export class EnrollmentsService {
             email: true,
           },
         },
+
         course: {
           select: {
             id: true,
@@ -85,7 +106,65 @@ export class EnrollmentsService {
           },
         },
       },
+      
       orderBy: { enrolledAt: 'desc' },
+    });
+  }
+
+  async findOne(id: string) {
+    const enrollment = await this.prisma.enrollment.findUnique({
+      where: { id },
+      include: {
+        user: true,
+        course: true,
+      },
+    });
+
+    if (!enrollment) {
+      throw new NotFoundException('Matrícula não encontrada.');
+    }
+
+    return enrollment;
+  }
+
+  async findByUser(userId: string) {
+    return this.prisma.enrollment.findMany({
+      where: { userId },
+      include: {
+        course: true,
+      },
+      orderBy: { enrolledAt: 'desc' },
+    });
+  }
+
+  async cancel(id: string) {
+    const enrollment = await this.prisma.enrollment.findUnique({
+      where: { id },
+    });
+
+    if (!enrollment) {
+      throw new NotFoundException('Matrícula não encontrada.');
+    }
+
+    // The Enrollment model doesn't have a `status` field in Prisma schema.
+    // We remove the enrollment to "cancel" it (hard delete). If you prefer
+    // a soft-delete, add a status or cancelledAt field to the schema.
+    return this.prisma.enrollment.delete({
+      where: { id },
+    });
+  }
+
+  async remove(id: string) {
+    const enrollment = await this.prisma.enrollment.findUnique({
+      where: { id },
+    });
+
+    if (!enrollment) {
+      throw new NotFoundException('Matrícula não encontrada.');
+    }
+
+    return this.prisma.enrollment.delete({
+      where: { id },
     });
   }
 }
