@@ -146,9 +146,6 @@ export class EnrollmentsService {
       throw new NotFoundException('Matrícula não encontrada.');
     }
 
-    // The Enrollment model doesn't have a `status` field in Prisma schema.
-    // We remove the enrollment to "cancel" it (hard delete). If you prefer
-    // a soft-delete, add a status or cancelledAt field to the schema.
     return this.prisma.enrollment.delete({
       where: { id },
     });
