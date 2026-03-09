@@ -29,7 +29,8 @@ function App() {
 
   // 4. Regra 2: Se estiver logado, mostre a Home
   if (isLoggedIn) {
-    return <Home />;
+    // Quando a Home pedir para sair, o App muda o estado de login para falso!
+    return <Home onLogout={() => setIsLoggedIn(false)} />;
   }
 
   // 5. Regra 3: Se clicou em cadastrar, mostre o Register

@@ -45,7 +45,7 @@ function Login({ onLoginSuccess, onGoToRegister }) {
             <label>Senha</label>
             <input
               type="password"
-              placeholder="••••••••••••"
+              placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -62,7 +62,10 @@ function Login({ onLoginSuccess, onGoToRegister }) {
           <button type="submit" className="btn-entrar">Entrar</button>
 
           <p className="register-link">
-            Não possui conta? <span onClick={onGoToRegister} style={{ color: '#352a5c', cursor: 'pointer', fontWeight: 'bold' }}>Clique aqui</span>
+            Não possui conta?
+            <span onClick={onGoToRegister} style={{ color: '#352a5c', cursor: 'pointer', fontWeight: 'bold' }}>
+              Clique aqui
+            </span>
           </p>
 
         </form>

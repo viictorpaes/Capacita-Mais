@@ -1,6 +1,6 @@
 import './Home.css';
 
-function Home() {
+function Home({ onLogout }) {
   return (
     <div className="home-container">
       
@@ -12,6 +12,7 @@ function Home() {
           <button>Meus Cursos</button>
           <button>Mentor+</button>
           <button>Meu Perfil</button>
+          <button onClick={onLogout} style={{ color: '#d9534f', fontWeight: 'bold' }}>Sair</button>
         </nav>
         <div className="desktop-user">
           <button className="search-btn">🔍</button>
@@ -23,6 +24,9 @@ function Home() {
       <header className="mobile-header">
         <h2>Olá Sarah</h2>
         <button className="search-btn">🔍</button>
+        <button onClick={onLogout} style={{ background: 'none', border: 'none', color: '#d9534f', fontWeight: 'bold', cursor: 'pointer' }}>
+          Sair
+        </button>
       </header>
 
       {/* CONTEÚDO PRINCIPAL */}
