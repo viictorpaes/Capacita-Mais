@@ -1,6 +1,6 @@
 import { useState } from 'react';
 // Importamos o mesmo CSS do App para reaproveitar o visual perfeitinho do Login!
-import '../App.css'; 
+import './Login.css'; 
 import logoImg from '../assets/logo.png'; 
 
 function Register({ onBackToLogin }) {
@@ -47,7 +47,6 @@ function Register({ onBackToLogin }) {
       <div className="login-header">
         <div className="logo">
           <img src={logoImg} alt="Logo Capacita Mais" className="logo-img" />
-          <h1>Capacita<span>+</span></h1>
         </div>
       </div>
 
@@ -59,7 +58,7 @@ function Register({ onBackToLogin }) {
             <label>Nome Completo</label>
             <input
               type="text"
-              placeholder="Digite seu nome"
+              placeholder="Digite seu nome completo"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
@@ -70,7 +69,7 @@ function Register({ onBackToLogin }) {
             <label>Email</label>
             <input
               type="email"
-              placeholder="sarah_alencar@gmail.com"
+              placeholder="exemplo@gmail.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -81,7 +80,7 @@ function Register({ onBackToLogin }) {
             <label>Senha</label>
             <input
               type="password"
-              placeholder="••••••••••••"
+              placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
