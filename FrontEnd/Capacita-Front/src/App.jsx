@@ -3,6 +3,7 @@ import './App.css';
 
 // 👇 1. AQUI: Importamos a tela Home que acabamos de criar
 import Home from './pages/home'; 
+import Register from './pages/Register'; // Adicione esta linha!
 
 // Importações de imagens do login
 import logoImg from './assets/logo.png'; 
@@ -15,6 +16,7 @@ function App() {
   
   // 👇 2. AQUI: Criamos a variável que diz se o usuário está logado (começa falso)
   const [isLoggedIn, setIsLoggedIn] = useState(false); 
+  const [showRegister, setShowRegister] = useState(false); // Adicione esta linha!
   
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -52,6 +54,11 @@ function App() {
     return <Home />;
   }
 
+  // SE CLICOU EM CADASTRAR, MOSTRA A NOVA TELA (E passa a função de voltar pro login)
+  if (showRegister) {
+    return <Register onBackToLogin={() => setShowRegister(false)} />;
+  }
+
   // Se o login for falso (padrão), ele chega até aqui e mostra a tela de LOGIN
   return (
     <div className="login-container">
@@ -70,7 +77,7 @@ function App() {
             <label>Email</label>
             <input
               type="email"
-              placeholder="sarah_alencar@gmail.com"
+              placeholder="exemplo@gmail.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -98,7 +105,7 @@ function App() {
           <button type="submit" className="btn-entrar">Entrar</button>
 
           <p className="register-link">
-            Não possui conta ? <a href="#">Clique aqui</a>
+            Não possui conta? <span onClick={() => setShowRegister(true)} style={{ color: '#352a5c', cursor: 'pointer', fontWeight: 'bold' }}>Clique aqui</span>
           </p>
 
           <div className="divider"></div>
