@@ -1,6 +1,37 @@
 import './Home.css';
+import { useState, useEffect } from 'react';
+import './Home.css';
+import MeusCursos from './meusCursos';
 
 function Home({ user, onLogout }) {
+const [isLoading, setIsLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    setIsLoggedIn(true);
+  };
+
+  if (isLoading) {
+    return (
+      <div className="preloader-container">
+        <img src="/path/to/logo.png" alt="Carregando..." className="preloader-logo" />
+      </div>
+    );
+  }
+
+  if (isLoggedIn) {
+    return <MeusCursos />;
+  }
+  
   return (
     <div className="home-container">
       
@@ -9,7 +40,7 @@ function Home({ user, onLogout }) {
         <div className="desktop-logo">Capacita<span>+</span></div>
         <nav className="desktop-nav">
           <button className="active">Início</button>
-          <button>Meus Cursos</button>
+          <button className='botoes' onClick={handleLogin}>Meus Cursos</button>
           <button>Mentor+</button>
           <button>Meu Perfil</button>
           <button onClick={onLogout} style={{ color: '#d9534f', fontWeight: 'bold' }}>Sair</button>
