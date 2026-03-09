@@ -1,9 +1,13 @@
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 // Importamos o mesmo CSS do App para reaproveitar o visual perfeitinho do Login!
 import './Login.css'; 
 import logoImg from '../assets/logo.png'; 
 
 function Register({ onBackToLogin }) {
+
+  const navigate = useNavigate();
+
   // Estados para guardar o que o usuário digita
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -29,7 +33,7 @@ function Register({ onBackToLogin }) {
       // 3. Se o cadastro der certo (Status 200/201)
       if (response.ok) {
         alert('Cadastro realizado com sucesso! Agora você pode fazer login.');
-        onBackToLogin(); // Manda o usuário de volta para a tela de Login
+        navigate('/login'); // Manda o usuário de volta para a tela de Login
       } else {
         // Se o email já existir, o Back-end vai mandar aquele erro que vimos no Service
         alert(data.message || 'Erro ao realizar cadastro.');
@@ -90,7 +94,10 @@ function Register({ onBackToLogin }) {
           <button type="submit" className="btn-entrar">Cadastrar</button>
 
           <p className="register-link" style={{ marginTop: '20px' }}>
-            Já possui uma conta? <span onClick={onBackToLogin} style={{ color: '#352a5c', cursor: 'pointer', fontWeight: 'bold' }}>Faça Login</span>
+            Já possui uma conta? 
+            <span onClick={() => navigate('/login')} style={{ color: '#352a5c', cursor: 'pointer', fontWeight: 'bold' }}>
+              Faça Login
+            </span>
           </p>
 
         </form>

@@ -1,6 +1,6 @@
 import './Home.css';
 
-function Home({ onLogout }) {
+function Home({ user, onLogout }) {
   return (
     <div className="home-container">
       
@@ -22,7 +22,7 @@ function Home({ onLogout }) {
 
       {/* 📱 HEADER EXCLUSIVO PARA MOBILE (Igual ao protótipo) */}
       <header className="mobile-header">
-        <h2>Olá Sarah</h2>
+        <h2>Olá, {user?.name || 'Usuário'}</h2>
         <button className="search-btn">🔍</button>
         <button onClick={onLogout} style={{ background: 'none', border: 'none', color: '#d9534f', fontWeight: 'bold', cursor: 'pointer' }}>
           Sair

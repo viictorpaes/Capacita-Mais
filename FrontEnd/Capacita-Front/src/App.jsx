@@ -1,49 +1,55 @@
-import { useState, useEffect } from 'react'; // Adicionamos o useEffect aqui!
+import { useState } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+
 import Home from './pages/Home';
 import Register from './pages/Register';
 import Login from './pages/Login';
-import logoImg from './assets/logo.png'; // Importamos a logo para o preloader
-import './App.css'; // Garantindo que o CSS global está sendo puxado!
+import './App.css'; // Não esqueça de manter o CSS global!
 
 function App() {
-  // 1. Estados da nossa aplicação
-  const [isLoading, setIsLoading] = useState(true); // O preloader volta!
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [showRegister, setShowRegister] = useState(false);
+  // Nosso estado que simula se o usuário tem o "crachá" (Token) ou não
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
 
-  // 2. Temporizador: tira o preloader da tela após 1.5 segundos
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
-  }, []);
-
-  // 3. Regra 1: Se estiver carregando, mostra a animação do Preloader
-  if (isLoading) {
-    return (
-      <div className="preloader-container">
-        <img src={logoImg} alt="Carregando..." className="preloader-logo" />
-      </div>
-    );
-  }
-
-  // 4. Regra 2: Se estiver logado, mostre a Home
-  if (isLoggedIn) {
-    // Quando a Home pedir para sair, o App muda o estado de login para falso!
-    return <Home onLogout={() => setIsLoggedIn(false)} />;
-  }
-
-  // 5. Regra 3: Se clicou em cadastrar, mostre o Register
-  if (showRegister) {
-    return <Register onBackToLogin={() => setShowRegister(false)} />;
-  }
-
-  // 6. Regra Padrão: Mostre o Login
   return (
-    <Login 
-      onLoginSuccess={() => setIsLoggedIn(true)} 
-      onGoToRegister={() => setShowRegister(true)} 
-    />
+    <BrowserRouter>
+      <Routes>
+        
+        {/* 1. ROTA RAIZ: O Guarda de Trânsito */}
+        <Route 
+          path="/" 
+          element={isAuthenticated ? <Navigate to="/home" /> : <Navigate to="/login" />} 
+        />
+
+        {/* 2. ROTA DE LOGIN */}
+        <Route 
+          path="/login" 
+          element={
+            isAuthenticated ? <Navigate to="/home" /> : <Login onLoginSuccess={(userData) => {
+                setIsAuthenticated(true);
+                setUser(userData);
+              }} />
+          } 
+        />
+
+        {/* 3. ROTA DE CADASTRO */}
+        <Route 
+          path="/cadastro" 
+          element={
+            isAuthenticated ? <Navigate to="/home" /> : <Register />
+          } 
+        />
+
+        {/* 4. ROTA DA HOME (Protegida) */}
+        <Route 
+          path="/home" 
+          element={
+            isAuthenticated ? <Home user={user} onLogout={() => setIsAuthenticated(false)} /> : <Navigate to="/login" />
+          } 
+        />
+
+      </Routes>
+    </BrowserRouter>
   );
 }
 

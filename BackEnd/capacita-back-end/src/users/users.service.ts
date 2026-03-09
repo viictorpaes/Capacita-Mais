@@ -1,9 +1,5 @@
-import 
-{ ConflictException, 
-  Injectable, 
-  NotFoundException 
-} from '@nestjs/common';
-
+import * as bcrypt from 'bcryptjs';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 
@@ -21,8 +17,13 @@ export class UsersService {
       throw new ConflictException('E-mail já cadastrado.');
     }
 
+    const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
+
     return this.prisma.user.create({
-      data: createUserDto,
+      data: {
+        ...createUserDto, 
+        password: hashedPassword
+      },
       select: {
 
         id: true,

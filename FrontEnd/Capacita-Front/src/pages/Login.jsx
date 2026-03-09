@@ -1,22 +1,55 @@
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import './Login.css'; // Importamos o CSS que já estava pronto
 import logoImg from '../assets/logo.png'; 
 
-function Login({ onLoginSuccess, onGoToRegister }) {
+// 2. Olha como a primeira linha mudou: tiramos o onGoToRegister
+function Login({ onLoginSuccess }) {
+  
+  // 3. E aqui nós criamos a variável que vai fazer a troca de URL!
+  const navigate = useNavigate(); 
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Impede a página de recarregar (comportamento padrão do HTML)
     
-    // Aqui vai a sua lógica de fetch para o Back-end no futuro.
-    // Por enquanto, como o Back-end ainda não tem a rota de login, 
-    // vamos apenas simular o sucesso para você conseguir acessar a Home:
-    console.log("Tentando logar com:", email, password);
-    alert("Como o Back-end ainda não tem login, vamos pular direto para a Home!");
-    
-    // Avisa o Maestro (App.jsx) que o login deu certo!
-    onLoginSuccess(); 
+    try {
+      // 1. O Carteiro: Enviando os dados para a porta 3000 (NestJS)
+      const response = await fetch('http://localhost:3000/auth/login', {
+        method: 'POST', // É um POST porque estamos enviando dados sigilosos
+        headers: {
+          'Content-Type': 'application/json', // Avisa o Back-end que estamos mandando um JSON
+        },
+        body: JSON.stringify({ 
+          email: email, 
+          password: password 
+        }), // Transforma nossas variáveis em texto puro
+      });
+
+      // 2. Abrindo a carta de resposta do Back-end
+      const data = await response.json();
+
+      // 3. O Back-end disse que a senha está certa? (Status 200 a 299)
+      if (response.ok) {
+        console.log("Sucesso! O Back-end respondeu:", data);
+        
+        // Seus colegas provavelmente configuraram para devolver um Token JWT aqui.
+        // Se sim, você guarda esse "crachá" no navegador assim:
+        // localStorage.setItem('token', data.token);
+
+        onLoginSuccess(data.user); // O Maestro muda o estado e o React Router te joga para /home
+      } else {
+        // Se o Back-end barrar (Status 401, 404, etc)
+        alert("Erro no login: " + (data.message || "E-mail ou senha inválidos."));
+      }
+
+    } catch (error) {
+      // Cai aqui se o servidor do NestJS estiver desligado ou der erro de rede
+      console.error("Erro de conexão:", error);
+      alert("Não foi possível conectar ao servidor. O Back-end está ligado?");
+    }
   };
 
   return (
@@ -62,8 +95,8 @@ function Login({ onLoginSuccess, onGoToRegister }) {
           <button type="submit" className="btn-entrar">Entrar</button>
 
           <p className="register-link">
-            Não possui conta?
-            <span onClick={onGoToRegister} style={{ color: '#352a5c', cursor: 'pointer', fontWeight: 'bold' }}>
+            Não possui conta? 
+            <span onClick={() => navigate('/cadastro')} style={{ color: '#352a5c', cursor: 'pointer', fontWeight: 'bold' }}>
               Clique aqui
             </span>
           </p>
