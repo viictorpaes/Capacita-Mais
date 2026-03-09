@@ -1,6 +1,20 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Patch,
+  Delete
+} from '@nestjs/common';
+
 import { CoursesService } from './courses.service';
+
 import { CreateCourseDto } from './dto/create-course.dto';
+
+import { PartialType } from '@nestjs/mapped-types';
+
+export class UpdateCourseDto extends PartialType(CreateCourseDto) {}
 
 @Controller('courses')
 export class CoursesController {
@@ -19,5 +33,18 @@ export class CoursesController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.coursesService.findOne(id);
+  }
+
+  @Patch(':id')
+  update(
+    @Param('id') id: string,
+    @Body() updateCourseDto: UpdateCourseDto
+  ) {
+    return this.coursesService.update(id, updateCourseDto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.coursesService.remove(id);
   }
 }
