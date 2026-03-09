@@ -1,19 +1,14 @@
 .home-container {
   width: 100%;
-  max-width: 100vw; /* Garante que nunca passe da largura do celular */
+  max-width: 100vw; 
   min-height: 100vh;
   padding-bottom: 90px; 
-  overflow-x: hidden; /* Corta qualquer elemento rebelde que tente empurrar a tela */
+  overflow-x: hidden; 
 }
 
-/* =========================================
-   1. VERSÃO MOBILE (Idêntica ao Protótipo)
-   ========================================= */
-
-/* Oculta os elementos feitos para o Desktop */
 .desktop-header { display: none; }
 
-/* Cabeçalho "Olá Sarah" */
+
 .mobile-header {
   display: flex; justify-content: space-between; align-items: center;
   padding: 20px; color: #333;
@@ -21,10 +16,10 @@
 .mobile-header h2 { font-size: 20px; font-weight: normal; color: #555; }
 .search-btn { background: none; border: none; font-size: 20px; cursor: pointer; }
 
-/* Área principal */
+
 .main-content { padding: 0 20px; }
 
-/* Banner Azul */
+
 .banner {
   background: linear-gradient(135deg, #a8d5e3, #85bce4);
   border-radius: 15px; padding: 25px 20px; display: flex; position: relative;
@@ -45,26 +40,26 @@
 .dot { width: 6px; height: 6px; background-color: rgba(255,255,255,0.5); border-radius: 50%; }
 .dot.active { background-color: white; }
 
-/* Títulos das Seções */
+
 .section { margin-bottom: 25px; }
 .section-title { font-size: 16px; font-weight: normal; color: #555; margin-bottom: 15px; }
 
-/* Efeito de Scroll Horizontal para o Mobile */
+
 .cards-wrapper {
   display: flex; gap: 15px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none;
 }
 .cards-wrapper::-webkit-scrollbar { display: none; }
 
-/* Visual Padrão de todos os Cards (Brancos, borda arredondada) */
+
 .card { background-color: white; border-radius: 15px; border: 1px solid #eee; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
 
-/* Categorias */
+
 .category-card { min-width: 160px; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
 .cat-info h4 { font-size: 14px; color: #333; }
 .cat-info p { font-size: 11px; color: #888; margin-top: 3px; }
 .cat-icon { font-size: 28px; }
 
-/* Cursos */
+
 .course-card { min-width: 220px; padding-bottom: 15px; }
 .course-img { width: 100%; height: 110px; background-color: #9bd6eb; border-radius: 15px 15px 0 0; display: flex; justify-content: center; align-items: center; font-size: 40px; margin-bottom: 10px; }
 .course-info { padding: 0 15px; }
@@ -72,13 +67,13 @@
 .course-info p { font-size: 11px; color: #666; }
 .students { color: #888; margin-left: 10px; }
 
-/* Ferramentas */
+
 .tool-card { min-width: 200px; padding: 15px; display: flex; align-items: center; gap: 15px; }
 .tool-icon { font-size: 35px; color: #357a73; }
 .tool-info h4 { font-size: 12px; color: #357a73; margin-bottom: 3px; }
 .tool-info p { font-size: 10px; color: #777; line-height: 1.3; }
 
-/* Menu Roxo Inferior */
+
 .mobile-bottom-nav {
   position: fixed; bottom: 0; left: 0; width: 100%;
   background-color: #d1c8e8; display: flex; justify-content: space-around;
@@ -89,19 +84,16 @@
 .nav-btn.active { color: #352a5c; font-weight: bold; }
 
 
-/* =========================================
-   2. VERSÃO DESKTOP (Tela cheia sem vazios)
-   ========================================= */
 @media (min-width: 1024px) {
   
   .home-container {
-    padding-bottom: 50px; /* Tira a compensação do menu inferior */
+    padding-bottom: 50px; 
   }
 
-  /* Some com tudo o que é de celular */
+
   .mobile-header, .mobile-bottom-nav { display: none; }
 
-  /* Mostra a Barra de Navegação no Topo da Tela */
+
   .desktop-header {
     display: flex; justify-content: space-between; align-items: center;
     padding: 20px 5%; background-color: white; border-bottom: 1px solid #eee;
@@ -118,29 +110,29 @@
   .desktop-user { display: flex; align-items: center; gap: 20px; }
   .user-avatar { font-size: 24px; background: #f0f0f0; border-radius: 50%; padding: 5px; }
 
-  /* Conteúdo usa 100% da tela disponível */
+
   .main-content {
     padding: 0 5%; 
     width: 100%;
   }
 
-  /* Banner se adapta a tela grande */
+
   .banner { padding: 50px; margin-bottom: 40px; }
   .banner-info h3 { font-size: 32px; margin-bottom: 10px;}
   .banner-info p { font-size: 16px; max-width: 400px; margin-bottom: 25px; }
   .btn-conheca { padding: 12px 30px; font-size: 14px; }
   .banner-illustration { font-size: 120px; padding-right: 50px; }
 
-  /* A MÁGICA: Converte o scroll horizontal em blocos de preenchimento total */
+
   .cards-wrapper {
     display: grid;
-    /* auto-fit obriga os cards a esticarem e ocuparem TODO espaço vazio */
+    
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 25px;
-    overflow-x: visible; /* Desativa o scroll horizontal */
+    overflow-x: visible; 
   }
 
-  /* Retira restrições para os cards crescerem livremente no desktop */
+
   .category-card, .course-card, .tool-card { 
     min-width: auto; 
     width: 100%; 

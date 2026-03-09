@@ -4,7 +4,7 @@ function Home({ user, onLogout }) {
   return (
     <div className="home-container">
       
-      {/* 💻 HEADER EXCLUSIVO PARA DESKTOP (Substitui o menu inferior) */}
+      
       <header className="desktop-header">
         <div className="desktop-logo">Capacita<span>+</span></div>
         <nav className="desktop-nav">
@@ -20,7 +20,7 @@ function Home({ user, onLogout }) {
         </div>
       </header>
 
-      {/* 📱 HEADER EXCLUSIVO PARA MOBILE (Igual ao protótipo) */}
+     
       <header className="mobile-header">
         <h2>Olá, {user?.name || 'Usuário'}</h2>
         <button className="search-btn">🔍</button>
@@ -29,10 +29,9 @@ function Home({ user, onLogout }) {
         </button>
       </header>
 
-      {/* CONTEÚDO PRINCIPAL */}
       <main className="main-content">
         
-        {/* BANNER PLANO PREMIUM */}
+       
         <section className="banner">
           <div className="banner-info">
             <h3>Plano Premium</h3>
@@ -45,7 +44,7 @@ function Home({ user, onLogout }) {
           </div>
         </section>
 
-        {/* CATEGORIAS */}
+        
         <section className="section">
           <h3 className="section-title">Categorias</h3>
           <div className="cards-wrapper">
@@ -70,7 +69,7 @@ function Home({ user, onLogout }) {
           </div>
         </section>
 
-        {/* CURSOS MAIS PROCURADOS */}
+      
         <section className="section">
           <h3 className="section-title">Cursos Mais Procurados</h3>
           <div className="cards-wrapper">
@@ -98,7 +97,7 @@ function Home({ user, onLogout }) {
           </div>
         </section>
 
-        {/* FERRAMENTAS MAIS UTILIZADAS */}
+      
         <section className="section">
           <h3 className="section-title">Ferramentas Mais Utilizadas</h3>
           <div className="cards-wrapper">
@@ -128,7 +127,7 @@ function Home({ user, onLogout }) {
 
       </main>
 
-      {/* 📱 MENU INFERIOR EXCLUSIVO PARA MOBILE (Igual ao protótipo) */}
+      
       <nav className="mobile-bottom-nav">
         <button className="nav-btn active"><span className="icon">🏠</span><span>Início</span></button>
         <button className="nav-btn"><span className="icon">▶️</span><span>Meus Cursos</span></button>

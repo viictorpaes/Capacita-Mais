@@ -1,6 +1,3 @@
-/* src/pages/Login.css - ESTILOS ESPECÍFICOS DE LOGIN E CADASTRO */
-
-/* --- ESTILO MOBILE FIRST --- */
 .login-container {
   width: 100vw; 
   height: 100vh; 
@@ -158,7 +155,7 @@
   object-fit: contain; 
 }
 
-/* --- AJUSTES PARA DESKTOP --- */
+
 @media (min-width: 768px) {
   .login-container {
     width: 700px;
