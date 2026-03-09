@@ -1,52 +1,42 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import './Login.css'; // Importamos o CSS que já estava pronto
+import './Login.css';
 import logoImg from '../assets/logo.png'; 
 
-// 2. Olha como a primeira linha mudou: tiramos o onGoToRegister
 function Login({ onLoginSuccess }) {
   
-  // 3. E aqui nós criamos a variável que vai fazer a troca de URL!
   const navigate = useNavigate(); 
-  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = async (e) => {
-    e.preventDefault(); // Impede a página de recarregar (comportamento padrão do HTML)
+    e.preventDefault();
     
     try {
-      // 1. O Carteiro: Enviando os dados para a porta 3000 (NestJS)
+      
       const response = await fetch('http://localhost:3000/auth/login', {
-        method: 'POST', // É um POST porque estamos enviando dados sigilosos
+        method: 'POST',
         headers: {
-          'Content-Type': 'application/json', // Avisa o Back-end que estamos mandando um JSON
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ 
           email: email, 
           password: password 
-        }), // Transforma nossas variáveis em texto puro
+        }),
       });
 
-      // 2. Abrindo a carta de resposta do Back-end
       const data = await response.json();
 
-      // 3. O Back-end disse que a senha está certa? (Status 200 a 299)
       if (response.ok) {
         console.log("Sucesso! O Back-end respondeu:", data);
-        
-        // Seus colegas provavelmente configuraram para devolver um Token JWT aqui.
-        // Se sim, você guarda esse "crachá" no navegador assim:
-        // localStorage.setItem('token', data.token);
 
-        onLoginSuccess(data.user); // O Maestro muda o estado e o React Router te joga para /home
+        onLoginSuccess(data.user);
       } else {
-        // Se o Back-end barrar (Status 401, 404, etc)
+
         alert("Erro no login: " + (data.message || "E-mail ou senha inválidos."));
       }
 
     } catch (error) {
-      // Cai aqui se o servidor do NestJS estiver desligado ou der erro de rede
       console.error("Erro de conexão:", error);
       alert("Não foi possível conectar ao servidor. O Back-end está ligado?");
     }

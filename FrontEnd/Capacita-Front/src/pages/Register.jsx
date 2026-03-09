@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-// Importamos o mesmo CSS do App para reaproveitar o visual perfeitinho do Login!
 import './Login.css'; 
 import logoImg from '../assets/logo.png'; 
 
@@ -8,34 +7,28 @@ function Register({ onBackToLogin }) {
 
   const navigate = useNavigate();
 
-  // Estados para guardar o que o usuário digita
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // A MÁGICA DA INTEGRAÇÃO ACONTECE AQUI
   const handleRegister = async (e) => {
     e.preventDefault();
     
     try {
-      // 1. Batemos na porta do Back-end (Rota POST /users que seu colega criou)
       const response = await fetch('http://localhost:3000/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        // 2. Enviamos os dados no formato que o NestJS e o Prisma esperam
         body: JSON.stringify({ name, email, password }), 
       });
 
       const data = await response.json();
 
-      // 3. Se o cadastro der certo (Status 200/201)
       if (response.ok) {
         alert('Cadastro realizado com sucesso! Agora você pode fazer login.');
-        navigate('/login'); // Manda o usuário de volta para a tela de Login
+        navigate('/login');
       } else {
-        // Se o email já existir, o Back-end vai mandar aquele erro que vimos no Service
         alert(data.message || 'Erro ao realizar cadastro.');
       }
       

@@ -1,19 +1,17 @@
 .home-container {
   width: 100%;
-  max-width: 100vw; /* Garante que nunca passe da largura do celular */
+  max-width: 100vw;
   min-height: 100vh;
   padding-bottom: 90px; 
-  overflow-x: hidden; /* Corta qualquer elemento rebelde que tente empurrar a tela */
+  overflow-x: hidden;
 }
 
-/* =========================================
-   1. VERSÃO MOBILE (Idêntica ao Protótipo)
-   ========================================= */
+/* ================
+   1. VERSÃO MOBILE 
+   ================ */
 
-/* Oculta os elementos feitos para o Desktop */
 .desktop-header { display: none; }
 
-/* Cabeçalho "Olá Sarah" */
 .mobile-header {
   display: flex; justify-content: space-between; align-items: center;
   padding: 20px; color: #333;
@@ -55,7 +53,7 @@
 }
 .cards-wrapper::-webkit-scrollbar { display: none; }
 
-/* Visual Padrão de todos os Cards (Brancos, borda arredondada) */
+/* Visual Padrão de todos os Cards */
 .card { background-color: white; border-radius: 15px; border: 1px solid #eee; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
 
 /* Categorias */
@@ -89,19 +87,17 @@
 .nav-btn.active { color: #352a5c; font-weight: bold; }
 
 
-/* =========================================
-   2. VERSÃO DESKTOP (Tela cheia sem vazios)
-   ========================================= */
+/* ==================
+   2. VERSÃO DESKTOP 
+   ================== */
 @media (min-width: 1024px) {
   
   .home-container {
-    padding-bottom: 50px; /* Tira a compensação do menu inferior */
+    padding-bottom: 50px;
   }
 
-  /* Some com tudo o que é de celular */
   .mobile-header, .mobile-bottom-nav { display: none; }
 
-  /* Mostra a Barra de Navegação no Topo da Tela */
   .desktop-header {
     display: flex; justify-content: space-between; align-items: center;
     padding: 20px 5%; background-color: white; border-bottom: 1px solid #eee;
@@ -118,29 +114,24 @@
   .desktop-user { display: flex; align-items: center; gap: 20px; }
   .user-avatar { font-size: 24px; background: #f0f0f0; border-radius: 50%; padding: 5px; }
 
-  /* Conteúdo usa 100% da tela disponível */
   .main-content {
     padding: 0 5%; 
     width: 100%;
   }
 
-  /* Banner se adapta a tela grande */
   .banner { padding: 50px; margin-bottom: 40px; }
   .banner-info h3 { font-size: 32px; margin-bottom: 10px;}
   .banner-info p { font-size: 16px; max-width: 400px; margin-bottom: 25px; }
   .btn-conheca { padding: 12px 30px; font-size: 14px; }
   .banner-illustration { font-size: 120px; padding-right: 50px; }
 
-  /* A MÁGICA: Converte o scroll horizontal em blocos de preenchimento total */
   .cards-wrapper {
     display: grid;
-    /* auto-fit obriga os cards a esticarem e ocuparem TODO espaço vazio */
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 25px;
-    overflow-x: visible; /* Desativa o scroll horizontal */
+    overflow-x: visible;
   }
 
-  /* Retira restrições para os cards crescerem livremente no desktop */
   .category-card, .course-card, .tool-card { 
     min-width: auto; 
     width: 100%; 
