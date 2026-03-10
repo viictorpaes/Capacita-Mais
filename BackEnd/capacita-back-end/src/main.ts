@@ -7,7 +7,6 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
 
-  // Swagger (OpenAPI) — habilitar apenas fora de produção
   if (process.env.NODE_ENV !== 'production') {
     const config = new DocumentBuilder()
       .setTitle('Capacita Mais API')
@@ -24,4 +23,3 @@ async function bootstrap() {
 }
 
 bootstrap();
-
