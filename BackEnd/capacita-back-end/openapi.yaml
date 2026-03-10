@@ -1,0 +1,267 @@
+openapi: 3.0.3
+info:
+  title: Capacita-Mais API (MVP)
+  description: Documentação mínima gerada para o MVP — inclui endpoints de autenticação, usuários e matrículas. Importe este arquivo no Postman ou abra com Swagger UI.
+  version: "1.0.0"
+servers:
+  - url: http://localhost:3000
+paths:
+  /auth/login:
+    post:
+      summary: Login de usuário
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginDto'
+      responses:
+        '200':
+          description: Token de acesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
+  /users:
+    post:
+      summary: Criar usuário
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserDto'
+      responses:
+        '201':
+          description: Usuário criado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    get:
+      summary: Listar usuários
+      responses:
+        '200':
+          description: Lista de usuários
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+
+  /users/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Buscar usuário por id
+      responses:
+        '200':
+          description: Usuário encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    patch:
+      summary: Atualizar usuário
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserDto'
+      responses:
+        '200':
+          description: Usuário atualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    delete:
+      summary: Remover usuário
+      responses:
+        '204':
+          description: Usuário removido
+
+  /enrollments:
+    post:
+      summary: Criar matrícula
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEnrollmentDto'
+      responses:
+        '201':
+          description: Matrícula criada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Enrollment'
+    get:
+      summary: Listar matrículas
+      responses:
+        '200':
+          description: Lista de matrículas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Enrollment'
+
+  /enrollments/user/{userId}:
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Listar matrículas por usuário
+      responses:
+        '200':
+          description: Matrículas do usuário
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Enrollment'
+
+  /enrollments/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Obter matrícula por id
+      responses:
+        '200':
+          description: Matrícula
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Enrollment'
+    delete:
+      summary: Remover matrícula
+      responses:
+        '204':
+          description: Matrícula removida
+
+  /enrollments/{id}/cancel:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    patch:
+      summary: Cancelar matrícula (remoção)
+      responses:
+        '200':
+          description: Matrícula cancelada (deletada)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Enrollment'
+
+components:
+  schemas:
+    CreateUserDto:
+      type: object
+      required:
+        - name
+        - email
+        - password
+      properties:
+        name:
+          type: string
+          example: João Silva
+        email:
+          type: string
+          example: joao@example.com
+        password:
+          type: string
+          example: s3nh4Segura
+
+    UpdateUserDto:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+
+    CreateEnrollmentDto:
+      type: object
+      required:
+        - userId
+        - courseId
+      properties:
+        userId:
+          type: string
+          example: 550e8400-e29b-41d4-a716-446655440000
+        courseId:
+          type: string
+          example: 550e8400-e29b-41d4-a716-446655440001
+
+    UpdateEnrollmentDto:
+      type: object
+      properties:
+        userId:
+          type: string
+        courseId:
+          type: string
+
+    Enrollment:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        courseId:
+          type: string
+        enrolledAt:
+          type: string
+          format: date-time
+
+    LoginDto:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          example: joao@example.com
+        password:
+          type: string
+          example: s3nh4Segura
+
+securitySchemes: {}
