@@ -20,3 +20,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     return { userId: payload.sub, email: payload.email };
   }
 }
+
+/* 
+
+Issue Reportada: Jwt está impedindo o frontendin' de ser atualizado!
+
+ex: após o usuário logar com seu email e senha (criptografada pelo bycript no auth.service.ts); 
+
+se ele mudar pra outra aba, ele é deslogado!!
+
+*/
