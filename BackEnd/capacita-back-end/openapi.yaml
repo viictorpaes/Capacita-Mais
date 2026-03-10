@@ -4,7 +4,7 @@ info:
   description: Documentação mínima gerada para o MVP — inclui endpoints de autenticação, usuários e matrículas. Importe este arquivo no Postman ou abra com Swagger UI.
   version: "1.0.0"
 servers:
-  - url: http://localhost:3000
+  - url: http://localhost:3000/api
 paths:
   /auth/login:
     post:
