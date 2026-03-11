@@ -1,14 +1,33 @@
 openapi: 3.0.3
 info:
-  title: Capacita-Mais API (MVP)
-  description: Documentação mínima gerada para o MVP — inclui endpoints de autenticação, usuários e matrículas. Importe este arquivo no Postman ou abra com Swagger UI.
+  title: Capacita Mais — API (MVP)
+  description: |
+    Documentação mínima gerada para o MVP do projeto Capacita Mais.
+    Este OpenAPI descreve os endpoints de autenticação, usuários e matrículas.
+    Importe este arquivo no Postman ou abra com Swagger UI para testar a API localmente. (preferívelmente, o Swagger UI)
   version: "1.0.0"
+  contact:
+    name: Equipe Capacita Mais
+    email: equipe@capacita-mais.example
+  license:
+    name: MIT
 servers:
   - url: http://localhost:3000/api
+    description: Servidor local (desenvolvimento)
+tags:
+  - name: auth
+    description: Autenticação (login / tokens)
+  - name: users
+    description: Operações relacionadas a usuários
+  - name: enrollments
+    description: Operações relacionadas a matrículas
 paths:
   /auth/login:
     post:
+      tags:
+        - auth
       summary: Login de usuário
+      operationId: loginUser
       requestBody:
         required: true
         content:
@@ -29,7 +48,10 @@ paths:
 
   /users:
     post:
+      tags:
+        - users
       summary: Criar usuário
+      operationId: createUser
       requestBody:
         required: true
         content:
@@ -44,7 +66,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
     get:
+      tags:
+        - users
       summary: Listar usuários
+      operationId: listUsers
       responses:
         '200':
           description: Lista de usuários
@@ -63,7 +88,10 @@ paths:
         schema:
           type: string
     get:
+      tags:
+        - users
       summary: Buscar usuário por id
+      operationId: getUserById
       responses:
         '200':
           description: Usuário encontrado
@@ -72,7 +100,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
     patch:
+      tags:
+        - users
       summary: Atualizar usuário
+      operationId: updateUser
       requestBody:
         required: true
         content:
@@ -87,14 +118,20 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
     delete:
+      tags:
+        - users
       summary: Remover usuário
+      operationId: deleteUser
       responses:
         '204':
           description: Usuário removido
 
   /enrollments:
     post:
+      tags:
+        - enrollments
       summary: Criar matrícula
+      operationId: createEnrollment
       requestBody:
         required: true
         content:
@@ -109,7 +146,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Enrollment'
     get:
+      tags:
+        - enrollments
       summary: Listar matrículas
+      operationId: listEnrollments
       responses:
         '200':
           description: Lista de matrículas
@@ -128,7 +168,10 @@ paths:
         schema:
           type: string
     get:
+      tags:
+        - enrollments
       summary: Listar matrículas por usuário
+      operationId: listEnrollmentsByUser
       responses:
         '200':
           description: Matrículas do usuário
@@ -147,7 +190,10 @@ paths:
         schema:
           type: string
     get:
+      tags:
+        - enrollments
       summary: Obter matrícula por id
+      operationId: getEnrollmentById
       responses:
         '200':
           description: Matrícula
@@ -156,7 +202,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Enrollment'
     delete:
+      tags:
+        - enrollments
       summary: Remover matrícula
+      operationId: deleteEnrollment
       responses:
         '204':
           description: Matrícula removida
@@ -169,7 +218,10 @@ paths:
         schema:
           type: string
     patch:
+      tags:
+        - enrollments
       summary: Cancelar matrícula (remoção)
+      operationId: cancelEnrollment
       responses:
         '200':
           description: Matrícula cancelada (deletada)
@@ -263,5 +315,10 @@ components:
         password:
           type: string
           example: s3nh4Segura
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
 
-securitySchemes: {}
+security: []
