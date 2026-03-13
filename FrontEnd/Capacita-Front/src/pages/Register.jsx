@@ -1,102 +1,110 @@
-import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import './Login.css'; 
-import logoImg from '../assets/logo.png'; 
+import { Link, useNavigate } from 'react-router-dom';
+import './Login.css';
+import logoCapacita from '../assets/logo.png';
 
-function Register({ onBackToLogin }) {
-
-  const navigate = useNavigate();
-
-  const [name, setName] = useState('');
+export function Register() {
+  // Criamos os estados para cada campo do formulário
+  const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [erro, setErro] = useState('');
+  const navigate = useNavigate();
 
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    
-    try {
-      const response = await fetch('http://localhost:3000/users', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name, email, password }), 
-      });
+  const handleRegister = (evento) => {
+    evento.preventDefault();
+    setErro('');
 
-      const data = await response.json();
-
-      if (response.ok) {
-        alert('Cadastro realizado com sucesso! Agora você pode fazer login.');
-        navigate('/login');
-      } else {
-        alert(data.message || 'Erro ao realizar cadastro.');
-      }
+    // Validação básica para teste visual
+    if (nome !== '' && email !== '' && password !== '') {
+      const novoUsuario = { nome, email, password };
+      console.log("Pronto para enviar para a API:", novoUsuario);
       
-    } catch (error) {
-      console.error('Erro na requisição:', error);
-      alert('Não foi possível conectar ao servidor. O NestJS está rodando?');
+      // Simula um cadastro com sucesso e manda pro login
+      alert('Cadastro realizado com sucesso! (Simulação)');
+      navigate('/login');
+    } else {
+      setErro('Preencha todos os campos.');
     }
+    
+    // Este é o payload exato que será enviado. 
+    // Quando construíres o teu endpoint de criação de utilizador num backend com Django REST Framework ou NestJS, 
+    // é esta a estrutura JSON que ele vai receber no "body" da requisição HTTP POST.
+    const novoUtilizador = {
+      nome,
+      email,
+      password,
+    };
+
+    console.log("Dados prontos para criar o utilizador na API:", novoUtilizador);
   };
 
   return (
     <div className="login-container">
-      {/* HEADER: LOGO */}
-      <div className="login-header">
-        <div className="logo">
-          <img src={logoImg} alt="Logo Capacita Mais" className="logo-img" />
+      <div className="login-card">
+        
+        <div className="left-panel">
+          <img 
+            src={logoCapacita} 
+            alt="Logo Capacita+" 
+            className="brand-logo" 
+          />
         </div>
-      </div>
+        
+        <div className="right-panel">
+          <form className="login-form" onSubmit={handleRegister}>
+            
+            <div className="input-group">
+              <label htmlFor="nome">Nome Completo</label>
+              <input 
+                id="nome"
+                type="text" 
+                value={nome} 
+                onChange={(e) => setNome(e.target.value)} 
+                placeholder="Digite seu nome completo"
+                autoFocus
+                required
+              />
+            </div>
 
-      {/* FORMULÁRIO DE CADASTRO */}
-      <div className="login-form-section">
-        <form className="login-form" onSubmit={handleRegister}>
+            <div className="input-group">
+              <label htmlFor="email">Email</label>
+              <input 
+                id="email"
+                type="email" 
+                value={email} 
+                onChange={(e) => setEmail(e.target.value)} 
+                placeholder="exemplo@email.com"
+                required
+              />
+            </div>
+            
+            <div className="input-group">
+              <label htmlFor="senha">Senha</label>
+              <input 
+                id="senha"
+                type="password" 
+                value={password} 
+                onChange={(e) => setPassword(e.target.value)} 
+                placeholder="••••••••"
+                autoComplete='off'
+                required
+              />
+            </div>
+
+            {erro && <p style={{ color: 'red', textAlign: 'center', backgroundColor: 'white', padding: '10px', borderRadius: '5px' }}>{erro}</p>}
+
+            <button className="btn-primary" type="submit" style={{ marginTop: '10px' }}>
+              Cadastrar
+            </button>
+          </form>
           
-          <div className="input-group">
-            <label>Nome Completo</label>
-            <input
-              type="text"
-              placeholder="Digite seu nome completo"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
+          <div className="register-link">
+            <p>Já possui conta?<Link to="/login">Clique aqui</Link></p>
           </div>
+        </div>
 
-          <div className="input-group">
-            <label>Email</label>
-            <input
-              type="email"
-              placeholder="exemplo@gmail.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="input-group">
-            <label>Senha</label>
-            <input
-              type="password"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-
-          <button type="submit" className="btn-entrar">Cadastrar</button>
-
-          <p className="register-link" style={{ marginTop: '20px' }}>
-            Já possui uma conta? 
-            <span onClick={() => navigate('/login')} style={{ color: '#352a5c', cursor: 'pointer', fontWeight: 'bold' }}>
-              Faça Login
-            </span>
-          </p>
-
-        </form>
       </div>
     </div>
   );
 }
-
-export default Register;

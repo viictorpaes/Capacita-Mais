@@ -1,100 +1,112 @@
-import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { Link, useNavigate  } from 'react-router-dom';
 import './Login.css';
-import logoImg from '../assets/logo.png'; 
+import logoCapacita from '../assets/logo.png';
 
-function Login({ onLoginSuccess }) {
-  
-  const navigate = useNavigate(); 
+export function Login() {
+  // Criamos duas "memórias" (estados) para o componente: email e senha
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [erro, setErro] = useState(''); // Estado novo para mostrar erros na tela
+  const navigate = useNavigate(); // Ferramenta para mudar de tela via JavaScript 
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    
+  // Função que roda quando o usuário clica em "Entrar"
+  const handleLogin =  async (evento) => {
+    evento.preventDefault(); // Evita que a página recarregue (padrão do HTML)
+    setErro(''); // Limpa erros anteriores 
+
     try {
-      
-      const response = await fetch('http://localhost:3000/auth/login', {
+      // Substitua esta URL pelo endpoint real da sua API (ex: http://localhost:8000/api/login)
+      const resposta = await fetch('URL_DA_SUA_API_AQUI', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 
-          email: email, 
-          password: password 
-        }),
+        body: JSON.stringify({ email, password }),
       });
 
-      const data = await response.json();
+      const dados = await resposta.json();
 
-      if (response.ok) {
-        console.log("Sucesso! O Back-end respondeu:", data);
-
-        onLoginSuccess(data.user);
+      if (resposta.ok) {
+        // 1. Salva o token que veio da API no navegador
+        // Assumindo que a sua API devolve algo como { "token": "eyJhbGci..." }
+        localStorage.setItem('token', dados.token); 
+        
+        // 2. Redireciona o usuário para a Home ("/")
+        navigate('/');
       } else {
-
-        alert("Erro no login: " + (data.message || "E-mail ou senha inválidos."));
+        // Se a API retornar erro (ex: 401 Unauthorized), mostramos na tela
+        setErro(dados.message || 'Email ou senha incorretos.');
       }
-
     } catch (error) {
-      console.error("Erro de conexão:", error);
-      alert("Não foi possível conectar ao servidor. O Back-end está ligado?");
+      console.error("Erro na requisição:", error);
+      setErro('Erro ao conectar com o servidor.');
     }
+
+    
+    console.log("Dados prontos para enviar para a API:", { email, password });
+    
+    // Aqui entrará o seu fetch() ou axios.post() chamando a sua API de autenticação
   };
 
   return (
     <div className="login-container">
-      <div className="login-header">
-        <div className="logo">
-          <img src={logoImg} alt="Logo Capacita Mais" className="logo-img" />
+      <div className="login-card">
+        
+        <div className="left-panel">
+          <img 
+            src={logoCapacita} 
+            alt="Logo Capacita+" 
+            className="brand-logo" 
+          />
         </div>
-      </div>
+        
+        <div className="right-panel">
+          <form className="login-form" onSubmit={handleLogin}>
+            
+            <div className="input-group">
+              <label htmlFor="email">Email</label>
+              <input 
+                id="email"
+                type="email" 
+                value={email} 
+                onChange={(e) => setEmail(e.target.value)} 
+                placeholder="exemplo@email.com"
+                required
+              />
+            </div>
+            
+            <div className="input-group">
+              <label htmlFor="senha">Senha</label>
+              <input 
+                id="senha"
+                type="password" 
+                value={password} 
+                onChange={(e) => setPassword(e.target.value)} 
+                placeholder="••••••••"
+                required
+              />
+            </div>
+            
+            <div className="form-extras">
+                <label className="keep-logged-in">
+                    <input type="checkbox" />
+                    Manter login
+                </label>
+                <a href="#" className="forgot-password">Esqueceu a senha?</a>
+            </div>
 
-      <div className="login-form-section">
-        <form className="login-form" onSubmit={handleLogin}>
+            {erro && <p style={{ color: 'red', textAlign: 'center', backgroundColor: 'transparent', padding: '10px', borderRadius: '5px' }}>{erro}</p>}
+
+            <button className="btn-primary" type="submit">Entrar</button>
+          </form>
           
-          <div className="input-group">
-            <label>Email</label>
-            <input
-              type="email"
-              placeholder="exemplo@gmail.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+          <div className="register-link">
+            <p>Não possui conta?<Link to="/registro">Clique aqui</Link></p>
           </div>
+        </div>
 
-          <div className="input-group">
-            <label>Senha</label>
-            <input
-              type="password"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="form-options">
-            <label className="remember-me">
-              <input type="checkbox" /> Manter login
-            </label>
-            <a href="#" className="forgot-password">Esqueceu a senha?</a>
-          </div>
-
-          <button type="submit" className="btn-entrar">Entrar</button>
-
-          <p className="register-link">
-            Não possui conta? 
-            <span onClick={() => navigate('/cadastro')} style={{ color: '#352a5c', cursor: 'pointer', fontWeight: 'bold' }}>
-              Clique aqui
-            </span>
-          </p>
-
-        </form>
       </div>
     </div>
   );
 }
-
-export default Login;

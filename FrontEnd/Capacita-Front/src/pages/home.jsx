@@ -1,138 +1,176 @@
+import { useNavigate, Link } from 'react-router-dom';
 import './Home.css';
+import logoCapacita from '../assets/logo.png';
 
-function Home({ user, onLogout }) {
+export function Home() {
+  const navigate = useNavigate();
+
+  // ############ TESTE ##############
+  const usuarioLogado = {
+    nomeCompleto: "Maria Silva Santos",
+  };
+
+  // Pega apenas a primeira palavra do nome
+  const primeiroNome = usuarioLogado.nomeCompleto.split(' ')[0];
+  // ############ TESTE ##############
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  };
+
   return (
     <div className="home-container">
       
-      {/* HEADER DESKTOP */}
-      <header className="desktop-header">
-        <div className="desktop-logo">Capacita<span>+</span></div>
-        <nav className="desktop-nav">
-          <button className="active">Início</button>
-          <button>Meus Cursos</button>
-          <button>Mentor+</button>
-          <button>Meu Perfil</button>
-          <button onClick={onLogout} style={{ color: '#d9534f', fontWeight: 'bold' }}>Sair</button>
-        </nav>
-        <div className="desktop-user">
-          <button className="search-btn">🔍</button>
-          <div className="user-avatar">👤</div>
+      <nav className="navbar">
+        <img src={logoCapacita} alt="Capacita+" className="nav-logo" />
+        
+        <div className="nav-links">
+          <Link to="/" className="active">Início</Link>
+          <Link to="/cursos">Meus Cursos</Link>
+          <Link to="/mentor">Mentor +</Link>
+          <Link to="/perfil">Meu Perfil</Link>
         </div>
-      </header>
 
-      {/* HEADER MOBILE */}
-      <header className="mobile-header">
-        <h2>Olá, {user?.name || 'Usuário'}</h2>
-        <button className="search-btn">🔍</button>
-        <button onClick={onLogout} style={{ background: 'none', border: 'none', color: '#d9534f', fontWeight: 'bold', cursor: 'pointer' }}>
-          Sair
-        </button>
-      </header>
+        <div className="nav-user">
+          <span className="user-greeting">Olá, {primeiroNome}!</span>
+          <button onClick={handleLogout} className="btn-logout">Log Out</button>
+        </div>
+      </nav>
 
       <main className="main-content">
         
-        <section className="banner">
-          <div className="banner-info">
-            <h3>Plano Premium</h3>
-            <p>Desbloqueie ferramentas para maior produtividade</p>
-            <button className="btn-conheca">Conheça agora</button>
+        <section className="promo-banner">
+          <div>
+            <h2>Seja Premium e libere todos os conteúdos!</h2>
+            <p>Acesse Mentorias exclusivas e certificados validados pelo MEC.</p>
           </div>
-          <div className="banner-illustration">☁️🛡️</div>
-          <div className="banner-dots">
-            <span className="dot active"></span><span className="dot"></span><span className="dot"></span><span className="dot"></span><span className="dot"></span>
+          <Link to="/premium" className="btn-premium">Conhecer Planos</Link>
+        </section>
+
+        <section className="section-container">
+          <h3 className="section-title">Continue de onde parou</h3>
+          <div className="cards-grid">
+            
+            <div className="course-card">
+              <div className="course-image" style={{backgroundColor: '#ffb74d'}}></div>
+              <div className="course-info">
+                <h4>Comunicação Alternativa no TEA</h4>
+                <p style={{fontSize: '14px', color: '#666'}}>Módulo 2: Ferramentas Visuais</p>
+                <div className="progress-bar-bg">
+                  <div className="progress-bar-fill" style={{ width: '60%' }}></div>
+                </div>
+              </div>
+            </div>
+
+            <div className="course-card">
+              <div className="course-image" style={{backgroundColor: '#16a44f'}}></div>
+              <div className="course-info">
+                <h4>TDAH - Construindo um ambiente de aprendizado</h4>
+                <p style={{fontSize: '14px', color: '#666'}}>Atividades e exercícios</p>
+                <div className="progress-bar-bg">
+                  <div className="progress-bar-fill" style={{ width: '33%' }}></div>
+                </div>
+              </div>
+            </div>
+
+            <div className="course-card">
+              <div className="course-image" style={{backgroundColor: '#872b81'}}></div>
+              <div className="course-info">
+                <h4>Como Construir uma Sala de Aula Inclusiva?</h4>
+                <p style={{fontSize: '14px', color: '#666'}}>Módulo 3: Cores, paletas e tipografia</p>
+                <div className="progress-bar-bg">
+                  <div className="progress-bar-fill" style={{ width: '83%' }}></div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </section>
 
-        <section className="section">
-          <h3 className="section-title">Categorias</h3>
-          <div className="cards-wrapper">
-            <div className="card category-card">
-              <div className="cat-info">
-                <h4>TEA</h4><p>5 Cursos</p>
-              </div>
-              <div className="cat-icon">🧩</div>
-            </div>
-            <div className="card category-card">
-              <div className="cat-info">
-                <h4>TDAH</h4><p>15 Cursos</p>
-              </div>
-              <div className="cat-icon">🧠</div>
-            </div>
-            <div className="card category-card">
-              <div className="cat-info">
-                <h4>Dislexia</h4><p>13 Cursos</p>
-              </div>
-              <div className="cat-icon">📚</div>
-            </div>
+        <section className="section-container">
+          <h3 className="section-title">Explorar Categorias</h3>
+          <div className="categories-grid">
+            <div className="category-card">TDAH</div>
+            <div className="category-card">TEA</div>
+            <div className="category-card">Dislexia</div>
+            <div className="category-card">Altas Habilidades / Superdotação</div>
+            <div className="category-card">Educação Inclusiva</div>
           </div>
         </section>
 
-        <section className="section">
+        <section className="section-container">
           <h3 className="section-title">Cursos Mais Procurados</h3>
-          <div className="cards-wrapper">
-            <div className="card course-card">
-              <div className="course-img">🎀</div>
+          <div className="cards-grid">
+            
+            <div className="course-card">
+              <div className="course-image" style={{backgroundColor: '#64b5f6'}}></div>
               <div className="course-info">
-                <h4>TEA Nível 1</h4>
-                <p>4.5 ★ <span className="students">10.5k Estudantes</span></p>
+                <h4>Introdução ao TDAH em Sala de Aula</h4>
+                <p style={{fontSize: '14px', color: '#666'}}>Por: Dr. João Pedro</p>
               </div>
             </div>
-            <div className="card course-card">
-              <div className="course-img">🎀</div>
-              <div className="course-info">
-                <h4>TEA Nível 2</h4>
-                <p>4.5 ★ <span className="students">10.5k Estudantes</span></p>
-              </div>
-            </div>
-            <div className="card course-card">
-              <div className="course-img">🧩</div>
-              <div className="course-info">
-                <h4>Inclusão Escolar</h4>
-                <p>4.8 ★ <span className="students">8.2k Estudantes</span></p>
-              </div>
-            </div>
-          </div>
-        </section>
 
-        <section className="section">
-          <h3 className="section-title">Ferramentas Mais Utilizadas</h3>
-          <div className="cards-wrapper">
-            <div className="card tool-card">
-              <div className="tool-icon">📋</div>
-              <div className="tool-info">
-                <h4>SENSORISCAN</h4>
-                <p>Ferramenta prática para avaliar...</p>
+            <div className="course-card">
+              <div className="course-image" style={{backgroundColor: '#81c784'}}></div>
+              <div className="course-info">
+                <h4>Estratégias de Regulação Emocional</h4>
+                <p style={{fontSize: '14px', color: '#666'}}>Por: Psicóloga Ana Souza</p>
               </div>
             </div>
-            <div className="card tool-card">
-              <div className="tool-icon">💬</div>
-              <div className="tool-info">
-                <h4>COMUNICAVISUAL</h4>
-                <p>Edição de rotinas visuais...</p>
+
+            <div className="course-card">
+              <div className="course-image" style={{backgroundColor: '#e57373'}}></div>
+              <div className="course-info">
+                <h4>Adaptação de Material Didático</h4>
+                <p style={{fontSize: '14px', color: '#666'}}>Por: Prof. Carlos Dias</p>
               </div>
             </div>
-            <div className="card tool-card">
-              <div className="tool-icon">📅</div>
-              <div className="tool-info">
-                <h4>ROTINAPLUS</h4>
-                <p>Organização de horários...</p>
+
+            <div className="course-card">
+              <div className="course-image" style={{backgroundColor: '#64b5f6'}}></div>
+              <div className="course-info">
+                <h4>Introdução ao TDAH em Sala de Aula</h4>
+                <p style={{fontSize: '14px', color: '#666'}}>Por: Dr. João Pedro</p>
               </div>
             </div>
+
+            <div className="course-card">
+              <div className="course-image" style={{backgroundColor: '#81c784'}}></div>
+              <div className="course-info">
+                <h4>Estratégias de Regulação Emocional</h4>
+                <p style={{fontSize: '14px', color: '#666'}}>Por: Psicóloga Ana Souza</p>
+              </div>
+            </div>
+
+            <div className="course-card">
+              <div className="course-image" style={{backgroundColor: '#e57373'}}></div>
+              <div className="course-info">
+                <h4>Adaptação de Material Didático</h4>
+                <p style={{fontSize: '14px', color: '#666'}}>Por: Prof. Carlos Dias</p>
+              </div>
+            </div>
+
+            <div className="course-card">
+              <div className="course-image" style={{backgroundColor: '#64b5f6'}}></div>
+              <div className="course-info">
+                <h4>Introdução ao TDAH em Sala de Aula</h4>
+                <p style={{fontSize: '14px', color: '#666'}}>Por: Dr. João Pedro</p>
+              </div>
+            </div>
+
+            <div className="course-card">
+              <div className="course-image" style={{backgroundColor: '#81c784'}}></div>
+              <div className="course-info">
+                <h4>Estratégias de Regulação Emocional</h4>
+                <p style={{fontSize: '14px', color: '#666'}}>Por: Psicóloga Ana Souza</p>
+              </div>
+            </div>
+
           </div>
         </section>
 
       </main>
-
-      {/* MENU INFERIOR MOBILE */}
-      <nav className="mobile-bottom-nav">
-        <button className="nav-btn active"><span className="icon">🏠</span><span>Início</span></button>
-        <button className="nav-btn"><span className="icon">▶️</span><span>Meus Cursos</span></button>
-        <button className="nav-btn"><span className="icon">📖</span><span>Mentor+</span></button>
-        <button className="nav-btn"><span className="icon">👤</span><span>Meu Perfil</span></button>
-      </nav>
-
     </div>
   );
 }
-
-export default Home;
