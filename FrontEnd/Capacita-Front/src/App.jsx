@@ -1,56 +1,60 @@
-import { useState } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+// src/App.jsx
+import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom';
+import { Home } from './pages/Home';
+import { Login } from './pages/Login';
+import { Register } from './pages/Register';
 
-import Home from './pages/home';
-import Register from './pages/Register';
-import Login from './pages/Login';
-import './App.css'; 
 
-function App() {
+// 1. Função simulada de autenticação
+const estaLogado = () => {
+  // Busca a chave 'token' no armazenamento do navegador
+  const token = localStorage.getItem('token');
   
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState(null);
+  // Retorna true se encontrou alguma coisa, e false se o token for null
+  return token !== null; 
+};
 
+// 2. Componente de Rota Protegida ("O Segurança")
+const RotaProtegida = ({ children }) => {
+  if (!estaLogado()) {
+    // Se não estiver logado, chuta o usuário para o /login
+    return <Navigate to="/login" replace />;
+  }
+  // Se estiver logado, deixa ele ver a página (children)
+  return children;
+};
+
+/* >>>>>>>>>>>>>>>>>>>>>>>
+// 1. Função real de autenticação com JWT
+const estaLogado = () => {
+  // O localStorage guarda dados no navegador do usuário mesmo se ele fechar a aba.
+  // Aqui estamos checando se existe uma chave chamada 'token' salva.
+  const token = localStorage.getItem('token');
+  
+  // Se o token existir, retorna true. Se for null, retorna false.
+  return token !== null; 
+}; <<<<<<<<<<<<<<<<<<<<<<<<<
+*/ 
+
+
+export default function App() {
   return (
+    // BrowserRouter é o motor que avisa o React quando a URL do navegador muda
     <BrowserRouter>
+      {/* Routes é a caixa que guarda todas as suas rotas */}
       <Routes>
+        {/* Cada Route liga um caminho (path) a uma tela (element) */}
+
+        <Route path="/" element={
+          <RotaProtegida>
+            <Home />
+          </RotaProtegida>}
+        />
+
+        <Route path="/login" element={<Login />} />
+        <Route path="/registro" element={<Register />} />
         
-     
-        <Route 
-          path="/" 
-          element={isAuthenticated ? <Navigate to="/home" /> : <Navigate to="/login" />} 
-        />
-
-    
-        <Route 
-          path="/login" 
-          element={
-            isAuthenticated ? <Navigate to="/home" /> : <Login onLoginSuccess={(userData) => {
-                setIsAuthenticated(true);
-                setUser(userData);
-              }} />
-          } 
-        />
-
-       
-        <Route 
-          path="/cadastro" 
-          element={
-            isAuthenticated ? <Navigate to="/home" /> : <Register />
-          } 
-        />
-
-        
-        <Route 
-          path="/home" 
-          element={
-            isAuthenticated ? <Home user={user} onLogout={() => setIsAuthenticated(false)} /> : <Navigate to="/login" />
-          } 
-        />
-
       </Routes>
     </BrowserRouter>
   );
 }
-
-export default App;
