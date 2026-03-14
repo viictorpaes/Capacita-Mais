@@ -7,60 +7,32 @@ export function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [erro, setErro] = useState('');
-  const [carregando, setCarregando] = useState(false)
   const navigate = useNavigate();
 
   const handleLogin = async (evento) => {
     evento.preventDefault();
     setErro('');
-    setCarregando(true); // Desativa o botão e mostra "Entrando..."
     
-    // ====================================================================
-    // 1. CÓDIGO REAL DA API (COMENTADO PARA O FUTURO)
-    // Quando o NestJS estiver pronto, você vai apagar a simulação abaixo
-    // e descomentar este bloco:
-    // ====================================================================
-    /*
     try {
-      const resposta = await fetch('http://localhost:3000/auth/login', {
+      const resposta = await fetch('http://localhost:3000/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password }), 
       });
+
       const dados = await resposta.json();
 
       if (resposta.ok) {
         localStorage.setItem('token', dados.access_token); 
+        localStorage.setItem('userName', dados.user.name);
+        
         navigate('/');
       } else {
         setErro(dados.message || 'E-mail ou senha incorretos.');
       }
     } catch (error) {
       setErro('Erro ao conectar com o servidor.');
-    } finally {
-      setCarregando(false);
     }
-    */
-
-    // ====================================================================
-    // 2. SIMULAÇÃO HARDCODADA (ENQUANTO O BACK-END NÃO FICA PRONTO)
-    // ====================================================================
-    setTimeout(() => {
-      // Definimos uma credencial mestre para testar o sucesso
-      const emailCorreto = 'admin@capacita.com';
-      const senhaCorreta = '123456';
-
-      if (email === emailCorreto && password === senhaCorreta) {
-        // Simula o token JWT que o NestJS enviaria
-        const fakeJwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.simulacao";
-        localStorage.setItem('token', fakeJwt);
-        navigate('/'); // Vai para a Home
-      } else {
-        setErro('E-mail ou senha incorretos. (Dica: use admin@capacita.com / 123456)');
-      }
-      
-      setCarregando(false); // Reativa o botão
-    }, 1500); // Finge que a internet demorou 1.5 segundos
   };
 
   return (

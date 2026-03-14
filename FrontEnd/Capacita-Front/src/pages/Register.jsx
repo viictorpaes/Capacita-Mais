@@ -4,39 +4,43 @@ import './Login.css';
 import logoCapacita from '../assets/logo.png';
 
 export function Register() {
-  // Criamos os estados para cada campo do formulário
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [erro, setErro] = useState('');
   const navigate = useNavigate();
 
-  const handleRegister = (evento) => {
+  const handleRegister = async (evento) => {
     evento.preventDefault();
     setErro('');
 
-    // Validação básica para teste visual
     if (nome !== '' && email !== '' && password !== '') {
-      const novoUsuario = { nome, email, password };
-      console.log("Pronto para enviar para a API:", novoUsuario);
       
-      // Simula um cadastro com sucesso e manda pro login
-      alert('Cadastro realizado com sucesso! (Simulação)');
-      navigate('/login');
+      try {
+        const resposta = await fetch('http://localhost:3000/api/users', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            name: nome,
+            email: email, 
+            password: password 
+          }),
+        });
+
+        if (resposta.ok) {
+          alert('Conta criada com sucesso! Agora você já pode fazer o Login.');
+          navigate('/login');
+        } else {
+          const dadosErro = await resposta.json();
+          setErro(dadosErro.message || 'Erro ao criar conta. Verifique os dados.');
+        }
+      } catch (error) {
+        setErro('Erro ao conectar com o servidor. O back-end está rodando?');
+      }
+
     } else {
       setErro('Preencha todos os campos.');
     }
-    
-    // Este é o payload exato que será enviado. 
-    // Quando construíres o teu endpoint de criação de utilizador num backend com Django REST Framework ou NestJS, 
-    // é esta a estrutura JSON que ele vai receber no "body" da requisição HTTP POST.
-    const novoUtilizador = {
-      nome,
-      email,
-      password,
-    };
-
-    console.log("Dados prontos para criar o utilizador na API:", novoUtilizador);
   };
 
   return (

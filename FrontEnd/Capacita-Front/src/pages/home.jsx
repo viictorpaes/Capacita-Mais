@@ -6,46 +6,46 @@ import logoCapacita from '../assets/logo.png';
 export function Home() {
   const navigate = useNavigate();
 
-  const [usuario, setUsuario] = useState({ name: 'Carregando...' });
+  const [usuario, setUsuario] = useState({ 
+    name: localStorage.getItem('userName') || 'Aluno' 
+  });
   const [cursosMatriculados, setCursosMatriculados] = useState([]);
   const [cursosDisponiveis, setCursosDisponiveis] = useState([]);
   const [carregando, setCarregando] = useState(true);
 
   useEffect(() => {
+    const token = localStorage.getItem('token');
+
     const buscarDados = async () => {
       try {
-        const respostaCursos = await fetch('http://localhost:3000/courses');
+        const respostaCursos = await fetch('http://localhost:3000/api/courses');
         
         if (respostaCursos.ok) {
           const cursosDoBanco = await respostaCursos.json();
-          
           const cursosPublicados = cursosDoBanco
             .filter(curso => curso.isPublished)
             .slice(0, 8);
-            
           setCursosDisponiveis(cursosPublicados);
-        } else {
-          console.error("A API retornou um erro ao buscar cursos.");
         }
 
-        // =========================================================
-        // B. DADOS MOCKADOS: Usuário e Matrículas (Até o JWT ficar pronto)
-        // =========================================================
-        setUsuario({ 
-          id: "usr-123",
-          name: 'Maria Silva' 
-        });
-        
-        setCursosMatriculados([
-          { 
-            id: "enr-1111", 
-            course: {
-              id: "crs-aaaa-bbbb",
-              title: 'Comunicação Alternativa no TEA',
-              corCard: '#ffb74d' 
+        if (token) {
+          const tokenParts = token.split('.');
+          const payloadBase64 = tokenParts[1].replace(/-/g, '+').replace(/_/g, '/');
+          const payloadDecodificado = JSON.parse(window.atob(payloadBase64));
+          const userId = payloadDecodificado.sub; 
+
+          const respostaUsuario = await fetch(`http://localhost:3000/api/users/${userId}`, {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${token}`
             }
+          });
+
+          if (respostaUsuario.ok) {
+            const dadosUsuario = await respostaUsuario.json();
+            setCursosMatriculados(dadosUsuario.enrollments || []);
           }
-        ]);
+        }
 
       } catch (erro) {
         console.error("Erro fatal ao conectar com o back-end:", erro);
@@ -60,6 +60,7 @@ export function Home() {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('userName');
     navigate('/login');
   };
 
@@ -82,7 +83,7 @@ export function Home() {
           <Link to="/perfil">Meu Perfil</Link>
         </div>
         <div className="nav-user">
-          <span className="user-greeting">Olá, {primeiroNome}</span>
+          <span className="user-greeting">Olá, {primeiroNome}!</span>
           <button onClick={handleLogout} className="btn-logout">Sair</button>
         </div>
       </nav>
@@ -108,7 +109,7 @@ export function Home() {
                 {cursosMatriculados.length > 0 ? (
                   cursosMatriculados.map((matricula) => (
                     <div className="course-card" key={matricula.id}>
-                      <div className="course-image" style={{ backgroundColor: matricula.course.corCard }}></div>
+                      <div className="course-image"></div>
                       <div className="course-info">
                         <h4>{matricula.course.title}</h4>
                         {/* Mantido estático em 50% por enquanto, já que não há coluna de progresso no BD */}
@@ -147,7 +148,7 @@ export function Home() {
               {cursosDisponiveis.length > 0 ? (
                 cursosDisponiveis.map((curso) => (
                   <div className="course-card" key={curso.id}>
-                    <div className="course-image" style={{ backgroundColor: '#928fc8' }}></div>
+                    <div className="course-image"></div>
                     <div className="course-info">
                       <h4>{curso.title}</h4>
                       <p style={{ fontSize: '14px', color: '#666', marginBottom: '15px' }}>
