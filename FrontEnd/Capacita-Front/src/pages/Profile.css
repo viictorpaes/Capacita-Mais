@@ -1,0 +1,329 @@
+/* =========================================================
+   Profile.css — Capacita+
+   Herda as classes globais de home.css (.home-container,
+   .navbar, .main-content, .section-title, .section-container,
+   .cards-grid, .course-card, .course-image, .course-info,
+   .progress-bar-bg, .progress-bar-fill) e adiciona apenas
+   os estilos exclusivos da página de Perfil.
+   ========================================================= */
+
+/* ===== CABEÇALHO DO PERFIL ===== */
+.profile-header-card {
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+  padding: 35px 40px;
+  margin-top: 25px;
+  margin-bottom: 40px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+/* ===== AVATAR ===== */
+.profile-avatar {
+  flex-shrink: 0;
+}
+
+.avatar-img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #7fdbca;
+}
+
+.avatar-initials {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7fdbca, #00796b);
+  color: white;
+  font-size: 32px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 1px;
+  flex-shrink: 0;
+}
+
+/* ===== INFO DO CABEÇALHO ===== */
+.profile-header-info {
+  flex: 1;
+}
+
+.profile-name {
+  font-size: 24px;
+  color: #333;
+  margin: 0 0 4px 0;
+}
+
+.profile-role {
+  font-size: 15px;
+  color: #00796b;
+  font-weight: 600;
+  margin: 0 0 6px 0;
+}
+
+.profile-since {
+  font-size: 13px;
+  color: #999;
+  margin: 0;
+}
+
+/* ===== BADGE DE PLANO ===== */
+.profile-plan-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.plan-tag {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.plan-free {
+  background-color: #f0f0f0;
+  color: #666;
+}
+
+.plan-premium {
+  background: linear-gradient(135deg, #d1c4e9, #928fc8);
+  color: white;
+}
+
+.btn-upgrade {
+  background-color: #00796b;
+  color: white;
+  padding: 8px 18px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.btn-upgrade:hover {
+  background-color: #005f56;
+}
+
+/* ===== ESTATÍSTICAS ===== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 15px;
+}
+
+.stat-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 25px 20px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: transform 0.2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+}
+
+.stat-number {
+  font-size: 36px;
+  font-weight: bold;
+  color: #00796b;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: #888;
+  font-weight: 500;
+}
+
+/* ===== FORMULÁRIO DE DADOS DA CONTA ===== */
+.profile-form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.btn-edit {
+  background-color: #f0f0f0;
+  color: #555;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.btn-edit:hover {
+  background-color: #e0e0e0;
+}
+
+.profile-form {
+  background-color: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.profile-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* Reutiliza o .input-group do Login.css — apenas ajusta o fundo do card */
+.profile-form .input-group label {
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 8px;
+  display: block;
+  font-size: 14px;
+}
+
+.profile-form .input-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  background-color: #fafafa;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.profile-form .input-group input:focus {
+  outline: none;
+  border-color: #7fdbca;
+  box-shadow: 0 0 0 3px rgba(127, 219, 202, 0.2);
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+.btn-salvar {
+  background-color: #00796b;
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-salvar:hover {
+  background-color: #005f56;
+}
+
+.btn-cancelar {
+  background-color: #f0f0f0;
+  color: #555;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-cancelar:hover {
+  background-color: #e0e0e0;
+}
+
+/* ===== FEEDBACKS ===== */
+.feedback-sucesso {
+  color: #00796b;
+  background-color: #e0f2f1;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.feedback-erro {
+  color: #d32f2f;
+  background-color: #ffebee;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+/* ===== VISUALIZAÇÃO DE DADOS (modo leitura) ===== */
+.profile-info-display {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  padding: 18px 25px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  width: 160px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #888;
+  flex-shrink: 0;
+}
+
+.info-value {
+  font-size: 15px;
+  color: #333;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 700px) {
+  .profile-header-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 25px;
+  }
+
+  .profile-plan-badge {
+    margin-left: 0;
+    align-items: flex-start;
+  }
+
+  .profile-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .info-label {
+    width: 120px;
+  }
+}
