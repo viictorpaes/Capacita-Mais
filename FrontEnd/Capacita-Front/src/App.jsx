@@ -2,7 +2,7 @@ import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom';
 import { Home } from './pages/home';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
-
+import { Profile } from './pages/Profile';
 
 const estaLogado = () => {
   const token = localStorage.getItem('token');
@@ -30,7 +30,11 @@ export default function App() {
 
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Register />} />
-        
+        <Route path="/perfil" element={
+          <RotaProtegida>
+            <Profile />
+          </RotaProtegida>}
+        />
       </Routes>
     </BrowserRouter>
   );
