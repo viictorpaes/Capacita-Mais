@@ -80,3 +80,110 @@
   background-color: #bdbdbd;
   cursor: not-allowed;
 }
+
+/* ── Botão primário (azul) ─────────────────────────────── */
+.btn-admin-primary {
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  background-color: #1565c0;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-admin-primary:hover {
+  background-color: #0d47a1;
+}
+
+.btn-admin-primary:disabled {
+  background-color: #bdbdbd;
+  cursor: not-allowed;
+}
+
+/* ── Header com múltiplas ações ───────────────────────── */
+.admin-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ── Formulários inline ───────────────────────────────── */
+.admin-form {
+  background: #f5f7fa;
+  border: 1px solid #e0e4ea;
+  border-radius: 10px;
+  padding: 18px 20px 16px;
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.admin-form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.admin-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+  min-width: 160px;
+}
+
+.admin-form-group--wide {
+  flex: 2;
+  min-width: 220px;
+}
+
+.admin-form-group--checkbox {
+  justify-content: flex-end;
+  padding-bottom: 4px;
+}
+
+.admin-form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+}
+
+.admin-form-group--checkbox label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.admin-form-group input[type="text"],
+.admin-form-group input[type="email"],
+.admin-form-group input[type="password"],
+.admin-form-group input[type="number"],
+.admin-form-group select,
+.admin-form-group textarea {
+  border: 1px solid #c9d0dc;
+  border-radius: 7px;
+  padding: 9px 12px;
+  font-size: 14px;
+  color: #333;
+  background: white;
+  transition: border-color 0.15s;
+  font-family: inherit;
+}
+
+.admin-form-group input:focus,
+.admin-form-group select:focus,
+.admin-form-group textarea:focus {
+  outline: none;
+  border-color: #1565c0;
+}
+
+.admin-form-group textarea {
+  resize: vertical;
+}
+
