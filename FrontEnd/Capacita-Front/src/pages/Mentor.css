@@ -1,0 +1,239 @@
+.mentor-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.mentor-header h2 {
+  font-size: 32px;
+  color: #00796b;
+  margin-bottom: 10px;
+}
+
+.mentor-header p {
+  color: #555;
+  font-size: 16px;
+}
+
+/* Container principal do formulário */
+.mentor-card {
+  background-color: white;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.mentor-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* Ocultar o último input para ocupar a linha toda se necessário, ou agrupar o botão */
+.mentor-form .form-group:last-of-type {
+  grid-column: span 2;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.form-group select {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  color: #333;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.form-group select:focus {
+  border-color: #00796b;
+}
+
+.btn-gerar-ia {
+  grid-column: span 2;
+  background: linear-gradient(135deg, #7fdbca, #00796b);
+  color: white;
+  padding: 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-top: 10px;
+}
+
+.btn-gerar-ia:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 121, 107, 0.3);
+}
+
+/* Estado de Carregamento */
+.loading-ia {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.brain-spinner {
+  font-size: 60px;
+  animation: pulse 1.5s infinite alternate;
+  margin-bottom: 20px;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(1.2); opacity: 1; }
+}
+
+.loading-ia h3 {
+  color: #00796b;
+  margin-bottom: 10px;
+}
+
+.loading-ia p {
+  color: #666;
+}
+
+/* Resultado da IA (Timeline) */
+.resultado-ia {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.resultado-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.btn-refazer {
+  background-color: transparent;
+  border: 1px solid #928fc8;
+  color: #928fc8;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-refazer:hover {
+  background-color: #f4f2f9;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+}
+
+/* Linha vertical da timeline */
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 24px;
+  width: 2px;
+  background-color: #7fdbca;
+}
+
+.timeline-item {
+  display: flex;
+  gap: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.timeline-badge {
+  width: 50px;
+  height: 50px;
+  background-color: #00796b;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 20px;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 4px #f8f9fa;
+}
+
+.timeline-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  flex-grow: 1;
+}
+
+.timeline-content h4 {
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.timeline-content p {
+  color: #666;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.badge-tempo {
+  background-color: #e0f2f1;
+  color: #00796b;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.call-to-action-trilha {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.btn-iniciar-trilha {
+  background-color: #928fc8;
+  color: white;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(146, 143, 200, 0.4);
+}
+
+.btn-iniciar-trilha:hover {
+  background-color: #7a77b3;
+}
+
+/* Responsividade Básica */
+@media (max-width: 768px) {
+  .mentor-form {
+    grid-template-columns: 1fr;
+  }
+  .mentor-form .form-group:last-of-type,
+  .btn-gerar-ia {
+    grid-column: 1;
+  }
+  .resultado-header {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+}

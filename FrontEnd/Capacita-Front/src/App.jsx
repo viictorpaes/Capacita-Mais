@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom';
 import { Home } from './pages/home';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
+import { Mentor } from './pages/Mentor';
 import { Profile } from './pages/Profile';
 
 const estaLogado = () => {
@@ -28,6 +29,7 @@ export default function App() {
           </RotaProtegida>}
         />
 
+        <Route path="/mentor" element={<Mentor />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Register />} />
         <Route path="/perfil" element={
