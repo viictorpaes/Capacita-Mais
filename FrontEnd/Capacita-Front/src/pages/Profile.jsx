@@ -29,14 +29,13 @@ export function Profile() {
         const token = localStorage.getItem('token');
 
         if (token) {
-          // Decodifica o JWT para extrair o userId — mesmo padrão do home.jsx
+          
           const tokenParts = token.split('.');
           const payloadBase64 = tokenParts[1].replace(/-/g, '+').replace(/_/g, '/');
           const payloadDecodificado = JSON.parse(window.atob(payloadBase64));
           const userId = payloadDecodificado.sub;
 
-          // Busca os dados completos do usuário (incluindo matrículas)
-          // mesmo endpoint do home.jsx: GET /api/users/:id
+          
           const respostaUsuario = await fetch(`http://localhost:3000/api/users/${userId}`, {
             method: 'GET',
             headers: {
@@ -50,7 +49,7 @@ export function Profile() {
             setUsuario(dadosUsuario);
             setCursosMatriculados(dadosUsuario.enrollments || []);
 
-            // Pré-preenche o formulário de edição com os dados reais
+         
             setFormDados({
               nome: dadosUsuario.name || '',
               email: dadosUsuario.email || '',
@@ -72,9 +71,6 @@ export function Profile() {
     buscarDados();
   }, []);
 
-  // =========================================================
-  // HANDLERS
-  // =========================================================
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('userName');
@@ -124,7 +120,7 @@ export function Profile() {
       if (resposta.ok) {
         const dadosAtualizados = await resposta.json();
 
-        // Atualiza o localStorage para o nome novo aparecer na navbar também
+       
         localStorage.setItem('userName', dadosAtualizados.name);
 
         setUsuario(dadosAtualizados);
@@ -152,9 +148,7 @@ export function Profile() {
     });
   };
 
-  // =========================================================
-  // FUNÇÕES UTILITÁRIAS — mesmo padrão do home.jsx
-  // =========================================================
+  
   const getIniciais = (nome) => {
     if (!nome) return '?';
     const partes = nome.trim().split(' ');
@@ -173,9 +167,7 @@ export function Profile() {
 
   const primeiroNome = usuario.name?.split(' ')[0] ?? 'Aluno';
 
-  // =========================================================
-  // RENDER
-  // =========================================================
+
   return (
     <div className="home-container">
       {/* NAVBAR — idêntica ao home.jsx */}
@@ -204,7 +196,7 @@ export function Profile() {
           <p style={{ color: '#666', marginTop: '40px' }}>Carregando perfil...</p>
         ) : (
           <>
-            {/* ===== CABEÇALHO DO PERFIL ===== */}
+    
             <section className="profile-header-card">
               <div className="profile-avatar">
                 <div className="avatar-initials">{getIniciais(usuario.name)}</div>
@@ -224,7 +216,7 @@ export function Profile() {
               </div>
             </section>
 
-            {/* ===== ESTATÍSTICAS ===== */}
+          
             <section className="section-container">
               <h3 className="section-title">Minha Jornada</h3>
               <div className="stats-grid">
@@ -249,7 +241,7 @@ export function Profile() {
               </div>
             </section>
 
-            {/* ===== CURSOS EM ANDAMENTO ===== */}
+         
             <section className="section-container">
               <h3 className="section-title">Cursos em Andamento</h3>
               {cursosMatriculados.length > 0 ? (
@@ -261,7 +253,7 @@ export function Profile() {
                         <h4>{matricula.course.title}</h4>
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '8px' }}>
                           <span style={{ fontSize: '13px', color: '#888' }}>Progresso</span>
-                          {/* Mantido estático em 50% por enquanto, já que não há coluna de progresso no BD */}
+                         
                           <span style={{ fontSize: '13px', fontWeight: 'bold', color: '#00796b' }}>50%</span>
                         </div>
                         <div className="progress-bar-bg">
@@ -276,7 +268,7 @@ export function Profile() {
               )}
             </section>
 
-            {/* ===== DADOS DA CONTA ===== */}
+      
             <section className="section-container">
               <div className="profile-form-header">
                 <h3 className="section-title" style={{ marginBottom: 0 }}>Dados da Conta</h3>
