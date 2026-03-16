@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './Profile.css';
 import logoCapacita from '../assets/logo.png';
+import Toast from '../components/Toast';
+import useToast from '../hooks/useToast';
 
 export function Profile() {
   const navigate = useNavigate();
@@ -12,8 +14,7 @@ export function Profile() {
   const [cursosMatriculados, setCursosMatriculados] = useState([]);
   const [carregando, setCarregando] = useState(true);
   const [modoEdicao, setModoEdicao] = useState(false);
-  const [erro, setErro] = useState('');
-  const [sucesso, setSucesso] = useState('');
+  const { toast, showSuccess, showError, clearToast } = useToast();
 
   const [formDados, setFormDados] = useState({
     nome: '',
@@ -87,11 +88,10 @@ export function Profile() {
 
   const handleSalvarPerfil = async (evento) => {
     evento.preventDefault();
-    setErro('');
-    setSucesso('');
+    clearToast();
 
     if (formDados.senha && formDados.senha !== formDados.confirmarSenha) {
-      setErro('As senhas não coincidem.');
+      showError('As senhas não coincidem.');
       return;
     }
 
@@ -127,23 +127,22 @@ export function Profile() {
         localStorage.setItem('userName', dadosAtualizados.name);
 
         setUsuario(dadosAtualizados);
-        setSucesso('Perfil atualizado com sucesso!');
+        showSuccess('Perfil atualizado com sucesso!');
         setModoEdicao(false);
         setFormDados((prev) => ({ ...prev, senha: '', confirmarSenha: '' }));
       } else {
         const dadosErro = await resposta.json();
-        setErro(dadosErro.message || 'Erro ao salvar alterações.');
+        showError(dadosErro.message || 'Erro ao salvar alterações.');
       }
     } catch (error) {
       console.error('Erro na requisição:', error);
-      setErro('Erro ao conectar com o servidor.');
+      showError('Erro ao conectar com o servidor.');
     }
   };
 
   const handleCancelarEdicao = () => {
     setModoEdicao(false);
-    setErro('');
-    setSucesso('');
+    clearToast();
     setFormDados({
       nome: usuario.name || '',
       email: usuario.email || '',
@@ -194,6 +193,12 @@ export function Profile() {
       </nav>
 
       <main className="main-content">
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={clearToast}
+        />
+
         {carregando ? (
           <p style={{ color: '#666', marginTop: '40px' }}>Carregando perfil...</p>
         ) : (
@@ -281,8 +286,6 @@ export function Profile() {
                 )}
               </div>
 
-              {sucesso && <p className="feedback-sucesso">{sucesso}</p>}
-
               {modoEdicao ? (
                 <form className="profile-form" onSubmit={handleSalvarPerfil}>
                   <div className="profile-form-grid">
@@ -336,8 +339,6 @@ export function Profile() {
                       />
                     </div>
                   </div>
-
-                  {erro && <p className="feedback-erro">{erro}</p>}
 
                   <div className="form-actions">
                     <button type="submit" className="btn-salvar">Salvar Alterações</button>

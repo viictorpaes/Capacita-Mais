@@ -180,3 +180,24 @@
   height: 100%;
   border-radius: 4px;
 }
+
+.btn-enroll {
+  margin-top: 14px;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 12px;
+  background-color: #00796b;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-enroll:hover {
+  background-color: #005f56;
+}
+
+.btn-enroll:disabled {
+  background-color: #bdbdbd;
+  cursor: not-allowed;
+}

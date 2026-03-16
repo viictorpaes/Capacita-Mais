@@ -2,17 +2,19 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
 import logoCapacita from '../assets/logo.png';
+import Toast from '../components/Toast';
+import useToast from '../hooks/useToast';
 
 export function Register() {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [erro, setErro] = useState('');
+  const { toast, showError, clearToast } = useToast();
   const navigate = useNavigate();
 
   const handleRegister = async (evento) => {
     evento.preventDefault();
-    setErro('');
+    clearToast();
 
     if (nome !== '' && email !== '' && password !== '') {
       
@@ -32,14 +34,14 @@ export function Register() {
           navigate('/login');
         } else {
           const dadosErro = await resposta.json();
-          setErro(dadosErro.message || 'Erro ao criar conta. Verifique os dados.');
+          showError(dadosErro.message || 'Erro ao criar conta. Verifique os dados.');
         }
       } catch (error) {
-        setErro('Erro ao conectar com o servidor. O back-end está rodando?');
+        showError('Erro ao conectar com o servidor. O back-end está rodando?');
       }
 
     } else {
-      setErro('Preencha todos os campos.');
+      showError('Preencha todos os campos.');
     }
   };
 
@@ -56,6 +58,12 @@ export function Register() {
         </div>
         
         <div className="right-panel">
+          <Toast
+            message={toast.message}
+            type={toast.type}
+            onClose={clearToast}
+          />
+
           <form className="login-form" onSubmit={handleRegister}>
             
             <div className="input-group">
@@ -95,8 +103,6 @@ export function Register() {
                 required
               />
             </div>
-
-            {erro && <p style={{ color: 'red', textAlign: 'center', backgroundColor: 'white', padding: '10px', borderRadius: '5px' }}>{erro}</p>}
 
             <button className="btn-primary" type="submit" style={{ marginTop: '10px' }}>
               Cadastrar

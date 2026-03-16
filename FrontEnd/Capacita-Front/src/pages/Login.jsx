@@ -2,16 +2,18 @@ import { useState } from 'react';
 import { Link, useNavigate  } from 'react-router-dom';
 import './Login.css';
 import logoCapacita from '../assets/logo.png';
+import Toast from '../components/Toast';
+import useToast from '../hooks/useToast';
 
 export function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [erro, setErro] = useState('');
+  const { toast, showError, clearToast } = useToast();
   const navigate = useNavigate();
 
   const handleLogin = async (evento) => {
     evento.preventDefault();
-    setErro('');
+    clearToast();
     
     try {
       const resposta = await fetch('http://localhost:3000/api/auth/login', {
@@ -28,10 +30,10 @@ export function Login() {
         
         navigate('/');
       } else {
-        setErro(dados.message || 'E-mail ou senha incorretos.');
+        showError(dados.message || 'E-mail ou senha incorretos.');
       }
     } catch (error) {
-      setErro('Erro ao conectar com o servidor.');
+      showError('Erro ao conectar com o servidor.');
     }
   };
 
@@ -48,6 +50,12 @@ export function Login() {
         </div>
         
         <div className="right-panel">
+          <Toast
+            message={toast.message}
+            type={toast.type}
+            onClose={clearToast}
+          />
+
           <form className="login-form" onSubmit={handleLogin}>
             
             <div className="input-group">
@@ -81,8 +89,6 @@ export function Login() {
                 </label>
                 <a href="#" className="forgot-password">Esqueceu a senha?</a>
             </div>
-
-            {erro && <p style={{ color: 'red', textAlign: 'center', backgroundColor: 'transparent', padding: '10px', borderRadius: '5px' }}>{erro}</p>}
 
             <button className="btn-primary" type="submit">Entrar</button>
           </form>

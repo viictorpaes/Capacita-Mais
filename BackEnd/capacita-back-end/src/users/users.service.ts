@@ -65,6 +65,7 @@ export class UsersService {
 
         enrollments: {
           select: {
+            id: true,
             course: {
               select: {
                 id: true,

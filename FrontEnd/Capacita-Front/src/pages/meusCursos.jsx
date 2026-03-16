@@ -4,6 +4,7 @@ import './home.css';
 import './meusCursos.css';
 import logoCapacita from '../assets/logo.png';
 import semCursoImg from '../assets/semcurso.jpeg';
+import Toast from '../components/Toast';
 
 function MeusCursos() {
   const navigate = useNavigate();
@@ -12,6 +13,8 @@ function MeusCursos() {
   });
   const [cursosMatriculados, setCursosMatriculados] = useState([]);
   const [carregando, setCarregando] = useState(true);
+  const [removendoMatriculaId, setRemovendoMatriculaId] = useState('');
+  const [toast, setToast] = useState({ message: '', type: '' });
 
   useEffect(() => {
     const buscarCursos = async () => {
@@ -58,6 +61,38 @@ function MeusCursos() {
     navigate('/login');
   };
 
+  const handleDesmatricular = async (matriculaId) => {
+    const token = localStorage.getItem('token');
+    if (!token || !matriculaId) {
+      setToast({ message: 'Nao foi possivel desmatricular agora.', type: 'error' });
+      return;
+    }
+
+    setRemovendoMatriculaId(matriculaId);
+    setToast({ message: '', type: '' });
+
+    try {
+      const resposta = await fetch(`http://localhost:3000/api/enrollments/${matriculaId}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (resposta.ok) {
+        setCursosMatriculados((prev) => prev.filter((matricula) => matricula.id !== matriculaId));
+        setToast({ message: 'Desmatricula realizada com sucesso.', type: 'success' });
+      } else {
+        const dadosErro = await resposta.json();
+        setToast({ message: dadosErro.message || 'Erro ao desmatricular.', type: 'error' });
+      }
+    } catch (erro) {
+      setToast({ message: 'Erro ao conectar com o servidor.', type: 'error' });
+    } finally {
+      setRemovendoMatriculaId('');
+    }
+  };
+
   const primeiroNome = usuario.name.split(' ')[0];
 
   return (
@@ -79,6 +114,11 @@ function MeusCursos() {
       <main className="main-content">
         <section className="section-container">
           <h3 className="section-title">Meus Cursos</h3>
+          <Toast
+            message={toast.message}
+            type={toast.type}
+            onClose={() => setToast({ message: '', type: '' })}
+          />
 
           {carregando ? (
             <p className="my-courses-info">Carregando seus cursos...</p>
@@ -103,6 +143,14 @@ function MeusCursos() {
                       <div className="progress-bar-fill" style={{ width: '50%' }} />
                     </div>
                     <p className="my-courses-progress-label">50% concluido</p>
+                    <button
+                      type="button"
+                      className="btn-desenroll"
+                      onClick={() => handleDesmatricular(matricula.id)}
+                      disabled={removendoMatriculaId === matricula.id}
+                    >
+                      {removendoMatriculaId === matricula.id ? 'Desmatriculando...' : 'Desmatricular'}
+                    </button>
                   </div>
                 </div>
               ))}

@@ -55,3 +55,24 @@
   font-size: 13px;
   font-weight: bold;
 }
+
+.btn-desenroll {
+  margin-top: 12px;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 12px;
+  background-color: #d9363e;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-desenroll:hover {
+  background-color: #b92b34;
+}
+
+.btn-desenroll:disabled {
+  background-color: #bdbdbd;
+  cursor: not-allowed;
+}

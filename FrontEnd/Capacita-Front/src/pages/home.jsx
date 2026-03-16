@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './Home.css';
 import logoCapacita from '../assets/logo.png';
+import Toast from '../components/Toast';
+import useToast from '../hooks/useToast';
 
 export function Home() {
   const navigate = useNavigate();
@@ -9,9 +11,12 @@ export function Home() {
   const [usuario, setUsuario] = useState({ 
     name: localStorage.getItem('userName') || 'Aluno' 
   });
+  const [userId, setUserId] = useState('');
   const [cursosMatriculados, setCursosMatriculados] = useState([]);
   const [cursosDisponiveis, setCursosDisponiveis] = useState([]);
   const [carregando, setCarregando] = useState(true);
+  const [cursoMatriculandoId, setCursoMatriculandoId] = useState('');
+  const { toast, showSuccess, showError, clearToast } = useToast();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -33,6 +38,7 @@ export function Home() {
           const payloadBase64 = tokenParts[1].replace(/-/g, '+').replace(/_/g, '/');
           const payloadDecodificado = JSON.parse(window.atob(payloadBase64));
           const userId = payloadDecodificado.sub; 
+          setUserId(userId);
 
           const respostaUsuario = await fetch(`http://localhost:3000/api/users/${userId}`, {
             method: 'GET',
@@ -72,6 +78,46 @@ export function Home() {
     return `R$ ${numero.toFixed(2).replace('.', ',')}`;
   };
 
+  const idsCursosMatriculados = new Set(cursosMatriculados.map((m) => m.course.id));
+
+  const handleMatricular = async (courseId) => {
+    const token = localStorage.getItem('token');
+    if (!token || !userId) {
+      showError('Faça login novamente para se matricular.');
+      return;
+    }
+
+    clearToast();
+    setCursoMatriculandoId(courseId);
+
+    try {
+      const resposta = await fetch('http://localhost:3000/api/enrollments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          userId,
+          courseId,
+        }),
+      });
+
+      const dados = await resposta.json();
+
+      if (resposta.ok) {
+        setCursosMatriculados((prev) => [dados, ...prev]);
+        showSuccess('Matrícula realizada com sucesso.');
+      } else {
+        showError(dados.message || 'Não foi possível realizar a matrícula.');
+      }
+    } catch (erro) {
+      showError('Erro ao conectar com o servidor.');
+    } finally {
+      setCursoMatriculandoId('');
+    }
+  };
+
   return (
     <div className="home-container">
       <nav className="navbar">
@@ -89,6 +135,12 @@ export function Home() {
       </nav>
 
       <main className="main-content">
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={clearToast}
+        />
+
         <section className="promo-banner">
           <div>
             <h2>Seja Premium e libere todos os conteúdos!</h2>
@@ -164,6 +216,17 @@ export function Home() {
                       }}>
                         {formatarPreco(curso.price)}
                       </span>
+                      <button
+                        className="btn-enroll"
+                        onClick={() => handleMatricular(curso.id)}
+                        disabled={idsCursosMatriculados.has(curso.id) || cursoMatriculandoId === curso.id}
+                      >
+                        {idsCursosMatriculados.has(curso.id)
+                          ? 'Já matriculado'
+                          : cursoMatriculandoId === curso.id
+                            ? 'Matriculando...'
+                            : 'Cadastrar no curso'}
+                      </button>
                     </div>
                   </div>
                 ))
