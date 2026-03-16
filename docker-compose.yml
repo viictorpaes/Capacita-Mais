@@ -1,0 +1,80 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: capacita_postgres
+    environment:
+      POSTGRES_USER: capacita_user
+      POSTGRES_PASSWORD: capacita_password
+      POSTGRES_DB: capacita_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - capacita_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U capacita_user -d capacita_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  migrate:
+    image: node:20-alpine
+    container_name: capacita_migrate
+    working_dir: /app
+    volumes:
+      - ./BackEnd/capacita-back-end:/app
+      - backend_node_modules:/app/node_modules
+    command: sh -c "npm install && npx prisma generate && npx prisma migrate deploy"
+    environment:
+      DATABASE_URL: postgresql://capacita_user:capacita_password@postgres:5432/capacita_db
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+    networks:
+      - capacita_network
+
+  backend:
+    image: node:20-alpine
+    container_name: capacita_backend
+    working_dir: /app
+    volumes:
+      - ./BackEnd/capacita-back-end:/app
+      - backend_node_modules:/app/node_modules
+    command: npm run start:dev
+    environment:
+      DATABASE_URL: postgresql://capacita_user:capacita_password@postgres:5432/capacita_db
+      JWT_SECRET: capacita_jwt_secret_dev
+      CHOKIDAR_USEPOLLING: "true"
+    ports:
+      - "3000:3000"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    networks:
+      - capacita_network
+
+  frontend:
+    image: node:20-alpine
+    container_name: capacita_frontend
+    working_dir: /app
+    volumes:
+      - ./FrontEnd/Capacita-Front:/app
+      - frontend_node_modules:/app/node_modules
+    command: sh -c "npm install && npm run dev"
+    ports:
+      - "5173:5173"
+    networks:
+      - capacita_network
+
+volumes:
+  postgres_data:
+  backend_node_modules:
+  frontend_node_modules:
+
+networks:
+  capacita_network:
+    driver: bridge
