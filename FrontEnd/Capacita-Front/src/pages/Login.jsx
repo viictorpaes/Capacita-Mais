@@ -1,105 +1,97 @@
-import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import './Login.css'; 
-import logoImg from '../assets/logo.png'; 
+import { Link, useNavigate  } from 'react-router-dom';
+import './Login.css';
+import logoCapacita from '../assets/logo.png';
 
-
-function Login({ onLoginSuccess }) {
-  
-  
-  const navigate = useNavigate(); 
-  
+export function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [erro, setErro] = useState('');
+  const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
-    e.preventDefault(); 
+  const handleLogin = async (evento) => {
+    evento.preventDefault();
+    setErro('');
     
     try {
-  
-      const response = await fetch('http://localhost:3000/auth/login', {
-        method: 'POST', 
-        headers: {
-          'Content-Type': 'application/json', 
-        },
-        body: JSON.stringify({ 
-          email: email, 
-          password: password 
-        }), 
+      const resposta = await fetch('http://localhost:3000/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }), 
       });
 
-      
-      const data = await response.json();
+      const dados = await resposta.json();
 
-      
-      if (response.ok) {
-        console.log("Sucesso! O Back-end respondeu:", data);
+      if (resposta.ok) {
+        localStorage.setItem('token', dados.access_token); 
+        localStorage.setItem('userName', dados.user.name);
         
-        
-
-        onLoginSuccess(data.user); 
+        navigate('/');
       } else {
-        
-        alert("Erro no login: " + (data.message || "E-mail ou senha inválidos."));
+        setErro(dados.message || 'E-mail ou senha incorretos.');
       }
-
     } catch (error) {
-      
-      console.error("Erro de conexão:", error);
-      alert("Não foi possível conectar ao servidor. O Back-end está ligado?");
+      setErro('Erro ao conectar com o servidor.');
     }
   };
 
   return (
     <div className="login-container">
-      <div className="login-header">
-        <div className="logo">
-          <img src={logoImg} alt="Logo Capacita Mais" className="logo-img" />
+      <div className="login-card">
+        
+        <div className="left-panel">
+          <img 
+            src={logoCapacita} 
+            alt="Logo Capacita+" 
+            className="brand-logo" 
+          />
         </div>
-      </div>
+        
+        <div className="right-panel">
+          <form className="login-form" onSubmit={handleLogin}>
+            
+            <div className="input-group">
+              <label htmlFor="email">Email</label>
+              <input 
+                id="email"
+                type="email" 
+                value={email} 
+                onChange={(e) => setEmail(e.target.value)} 
+                placeholder="exemplo@email.com"
+                required
+              />
+            </div>
+            
+            <div className="input-group">
+              <label htmlFor="senha">Senha</label>
+              <input 
+                id="senha"
+                type="password" 
+                value={password} 
+                onChange={(e) => setPassword(e.target.value)} 
+                placeholder="••••••••"
+                required
+              />
+            </div>
+            
+            <div className="form-extras">
+                <label className="keep-logged-in">
+                    <input type="checkbox" />
+                    Manter login
+                </label>
+                <a href="#" className="forgot-password">Esqueceu a senha?</a>
+            </div>
 
-      <div className="login-form-section">
-        <form className="login-form" onSubmit={handleLogin}>
+            {erro && <p style={{ color: 'red', textAlign: 'center', backgroundColor: 'transparent', padding: '10px', borderRadius: '5px' }}>{erro}</p>}
+
+            <button className="btn-primary" type="submit">Entrar</button>
+          </form>
           
-          <div className="input-group">
-            <label>Email</label>
-            <input
-              type="email"
-              placeholder="exemplo@gmail.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+          <div className="register-link">
+            <p>Não possui conta?<Link to="/registro">Clique aqui</Link></p>
           </div>
+        </div>
 
-          <div className="input-group">
-            <label>Senha</label>
-            <input
-              type="password"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="form-options">
-            <label className="remember-me">
-              <input type="checkbox" /> Manter login
-            </label>
-            <a href="#" className="forgot-password">Esqueceu a senha?</a>
-          </div>
-
-          <button type="submit" className="btn-entrar">Entrar</button>
-
-          <p className="register-link">
-            Não possui conta? 
-            <span onClick={() => navigate('/cadastro')} style={{ color: '#352a5c', cursor: 'pointer', fontWeight: 'bold' }}>
-              Clique aqui
-            </span>
-          </p>
-
-        </form>
       </div>
     </div>
   );
