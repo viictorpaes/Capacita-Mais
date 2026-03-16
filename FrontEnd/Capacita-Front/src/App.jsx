@@ -3,7 +3,7 @@ import { Home } from './pages/home';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { Mentor } from './pages/Mentor';
-
+import { Profile } from './pages/Profile';
 
 const estaLogado = () => {
   const token = localStorage.getItem('token');
@@ -32,7 +32,11 @@ export default function App() {
         <Route path="/mentor" element={<Mentor />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Register />} />
-        
+        <Route path="/perfil" element={
+          <RotaProtegida>
+            <Profile />
+          </RotaProtegida>}
+        />
       </Routes>
     </BrowserRouter>
   );
