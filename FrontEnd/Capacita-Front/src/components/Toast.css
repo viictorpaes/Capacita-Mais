@@ -1,16 +1,27 @@
 .cp-toast {
-  position: sticky;
-  top: 90px;
-  z-index: 120;
-  margin-bottom: 16px;
-  padding: 12px 14px;
-  border-radius: 10px;
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 9999;
+  width: 320px;
+  max-width: calc(100vw - 40px);
+  min-height: 110px;
+  padding: 14px;
+  border-radius: 8px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
   font-weight: 600;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.cp-toast-entering {
+  animation: cp-toast-enter 220ms ease-out;
+}
+
+.cp-toast-leaving {
+  animation: cp-toast-leave 180ms ease-in forwards;
 }
 
 .cp-toast-success {
@@ -30,6 +41,44 @@
   background: transparent;
   color: inherit;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bold;
+  line-height: 1;
+  padding: 0;
+  margin-top: 2px;
+}
+
+@keyframes cp-toast-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes cp-toast-leave {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cp-toast {
+    animation: none;
+  }
+
+  .cp-toast-entering,
+  .cp-toast-leaving {
+    animation: none;
+  }
 }
