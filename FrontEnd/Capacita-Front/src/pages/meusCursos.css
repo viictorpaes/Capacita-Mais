@@ -1,164 +1,57 @@
-/* RESET BÁSICO */
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { background-color: #f8f9fa; font-family: Arial, Helvetica, sans-serif; }
-
-.meus-cursos-container {
-  width: 100%;
-  max-width: 100vw; /* Garante que nunca passe da largura do celular */
-  min-height: 100vh;
-  padding-bottom: 90px; 
-  overflow-x: hidden; /* Corta qualquer elemento rebelde que tente empurrar a tela */
+.my-courses-info {
+  color: #666;
 }
 
-/* =========================================
-   1. VERSÃO MOBILE (Idêntica ao Protótipo)
-   ========================================= */
-
-/* Oculta os elementos feitos para o Desktop */
-.desktop-header { display: none; }
-
-/* Cabeçalho "Meus Cursos" */
-.mobile-header {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 20px; color: #333;
-}
-.mobile-header h2 { font-size: 20px; font-weight: normal; color: #555; }
-.search-btn { background: none; border: none; font-size: 20px; cursor: pointer; }
-
-/* Área principal */
-.main-content { padding: 0 20px; }
-
-/* Sem Cursos */
-.sem-cursos {
-  text-align: center; color: #555;
-}
-.sem-cursos img { max-width: 100%; height: auto; margin-bottom: 15px; }
-.sem-cursos-title { font-size: 18px; font-weight: bold; color: #333; margin-bottom: 10px; }
-.sem-cursos-description { font-size: 14px; color: #666; margin-bottom: 20px; }
-.btn-explorar {
-  background-color: #4a90e2; border: none; padding: 12px 20px;
-  border-radius: 20px; font-size: 14px; font-weight: bold; color: white; cursor: pointer;
+.my-courses-empty {
+  background-color: white;
+  border-radius: 14px;
+  padding: 28px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  text-align: center;
 }
 
-/* Lista de Cursos */
-.cursos-lista {
-  display: flex; flex-direction: column; gap: 15px;
-}
-.curso-card {
-  background-color: white; border-radius: 15px; border: 1px solid #eee; box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-  padding: 15px;
-}
-.curso-info h4 { font-size: 16px; color: #333; margin-bottom: 5px; }
-.curso-info p { font-size: 12px; color: #666; margin-bottom: 5px; }
-.curso-progresso {
-  display: flex; align-items: center; gap: 10px;
-}
-.progresso-barra {
-  flex: 1; height: 8px; background-color: #eee; border-radius: 4px; overflow: hidden;
-}
-.progresso-preenchido {
-  height: 100%; background-color: #4a90e2;
-}
-.progresso-text {
-  font-size: 12px; color: #4a90e2; font-weight: bold;
-}
-.btn-continuar {
-  background-color: #4a90e2; border: none; padding: 8px 15px;
-  border-radius: 20px; font-size: 12px; font-weight: bold; color: white; cursor: pointer;
-}
-
-/* Menu Roxo Inferior */
-.mobile-footer {
-  position: fixed; bottom: 0; left: 0; width: 100%;
-  background-color: #d1c8e8; display: flex; justify-content: space-around;
-  padding: 10px 0 20px 0; border-radius: 20px 20px 0 0; z-index: 100;
-}
-.mobile-footer button {
-  background: none; border: none; display: flex; flex-direction: column; align-items: center; gap: 5px; color: #555; cursor: pointer; font-size: 10px;
-}
-.mobile-footer button.active { color: #352a5c; font-weight: bold; }
-
-/* =========================================
-   2. VERSÃO DESKTOP (Tela cheia sem vazios)
-   ========================================= */
-@media (min-width: 1024px) {
-  .meus-cursos-container {
-    padding-bottom: 50px; /* Tira a compensação do menu inferior */
-  }
-
-  /* Some com tudo o que é de celular */
-  .mobile-header, .mobile-footer { display: none; }
-
-  /* Mostra a Barra de Navegação no Topo da Tela */
-  .desktop-header {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 20px 5%; background-color: white; border-bottom: 1px solid #eee;
-    margin-bottom: 30px;
-  }
-  .desktop-logo { font-size: 24px; font-weight: bold; color: #352a5c; }
-  .desktop-logo span { color: #88d4b4; }
-
-  .desktop-nav { display: flex; gap: 30px; }
-  .desktop-nav button { background: none; border: none; font-size: 15px; color: #555; cursor: pointer; transition: 0.2s; }
-  .desktop-nav button:hover { color: #352a5c; }
-  .desktop-nav button.active { color: #352a5c; font-weight: bold; }
-
-  .desktop-user { display: flex; align-items: center; gap: 20px; }
-  .user-avatar { font-size: 24px; background: #f0f0f0; border-radius: 50%; padding: 5px; }
-
-  /* Conteúdo usa 100% da tela disponível */
-  .main-content {
-    padding: 0 5%;
-    width: 100%;
-  }
-
-  /* Lista de Cursos */
-  .cursos-lista {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 25px;
-  }
-
-  .curso-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 20px;
-  }
-
-  .curso-info h4 {
-    font-size: 18px;
-    color: #333;
-    margin-bottom: 10px;
-  }
-
-  .curso-info p {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 10px;
-  }
-
-  .curso-progresso {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-  }
-
-  .progresso-barra {
-    height: 10px;
-    border-radius: 5px;
-  }
-
-  .btn-continuar {
-    padding: 12px 20px;
-    font-size: 14px;
-  }
-}
-
-.card-mini-img {
-  width: 50px;
-  height: 50px;
+.my-courses-empty img {
+  width: 220px;
+  max-width: 100%;
   border-radius: 10px;
-  object-fit: cover;
-  margin-right: 15px;
+  margin-bottom: 16px;
+}
+
+.my-courses-empty-title {
+  font-size: 20px;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.my-courses-empty-description {
+  color: #666;
+  margin-bottom: 18px;
+}
+
+.btn-explorar {
+  background-color: #00796b;
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 22px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-explorar:hover {
+  background-color: #005f56;
+}
+
+.my-courses-card-description {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.my-courses-progress-label {
+  margin-top: 8px;
+  color: #00796b;
+  font-size: 13px;
+  font-weight: bold;
 }

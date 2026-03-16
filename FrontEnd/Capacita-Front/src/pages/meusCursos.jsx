@@ -1,84 +1,115 @@
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import './home.css';
 import './meusCursos.css';
-import semCursoImg from '../assets/semcurso.jpeg'; 
+import logoCapacita from '../assets/logo.png';
+import semCursoImg from '../assets/semcurso.jpeg';
 
-// 1. Definimos um valor padrão [] para courses para evitar erros se estiver vazio
-function MeusCursos({ onNavigate, courses = [] }) {
+function MeusCursos() {
+  const navigate = useNavigate();
+  const [usuario, setUsuario] = useState({
+    name: localStorage.getItem('userName') || 'Aluno',
+  });
+  const [cursosMatriculados, setCursosMatriculados] = useState([]);
+  const [carregando, setCarregando] = useState(true);
+
+  useEffect(() => {
+    const buscarCursos = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          setCursosMatriculados([]);
+          return;
+        }
+
+        const tokenParts = token.split('.');
+        const payloadBase64 = tokenParts[1].replace(/-/g, '+').replace(/_/g, '/');
+        const payloadDecodificado = JSON.parse(window.atob(payloadBase64));
+        const userId = payloadDecodificado.sub;
+
+        const respostaUsuario = await fetch(`http://localhost:3000/api/users/${userId}`, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (respostaUsuario.ok) {
+          const dadosUsuario = await respostaUsuario.json();
+          setUsuario({ name: dadosUsuario.name || localStorage.getItem('userName') || 'Aluno' });
+          setCursosMatriculados(dadosUsuario.enrollments || []);
+        } else {
+          setCursosMatriculados([]);
+        }
+      } catch (erro) {
+        console.error('Erro ao buscar cursos do usuario:', erro);
+        setCursosMatriculados([]);
+      } finally {
+        setCarregando(false);
+      }
+    };
+
+    buscarCursos();
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userName');
+    navigate('/login');
+  };
+
+  const primeiroNome = usuario.name.split(' ')[0];
 
   return (
-    <div className="meus-cursos-container">
-      
-      {/* 💻 HEADER DESKTOP (Mantendo seu padrão) */}
-      <header className="desktop-header">
-        <div className="desktop-logo">Capacita<span>+</span></div>
-        <nav className="desktop-nav">
-          <button onClick={onNavigate}>Início</button> 
-          <button className="active">Meus Cursos</button>
-          <button>Mentor+</button>
-          <button>Meu Perfil</button>
-        </nav>
-        <div className="desktop-user">
-          <button className="search-btn">🔍</button>
-          <div className="user-avatar">👤</div>
+    <div className="home-container">
+      <nav className="navbar">
+        <img src={logoCapacita} alt="Capacita+" className="nav-logo" />
+        <div className="nav-links">
+          <Link to="/">Inicio</Link>
+          <Link to="/cursos" className="active">Meus Cursos</Link>
+          <Link to="/mentor">Mentor +</Link>
+          <Link to="/perfil">Meu Perfil</Link>
         </div>
-      </header>
-
-      {/* 📱 HEADER MOBILE */}
-      <header className="mobile-header">
-        <h2>Meus Cursos</h2>
-        <button className="search-btn">🔍</button>
-      </header>
-
-      <main className="main-content">
-        {/* 2. Usamos a lista 'courses' que vem do App.jsx */}
-        {courses.length === 0 ? (
-          <div className="sem-cursos">
-            <img src={semCursoImg} alt="Sem Cursos" />
-            <p className="sem-cursos-title">Sem Cursos</p>
-            <p className="sem-cursos-description">Você ainda não selecionou nenhum curso.</p>
-            <button className="btn-explorar" onClick={onNavigate}>Explorar cursos</button>
-          </div>
-        ) : (
-          <div className="cursos-grid">
-            {courses.map(course => (
-              <div key={course.id} className="course-card-premium">
-                <div className="card-top">
-                  {/* Adicionei a imagem do curso no card para ficar completo */}
-                  <img src={course.image} alt={course.title} className="card-mini-img" />
-                  
-                  <div className="card-info">
-                    <h4>{course.title}</h4>
-                    <p className="card-desc">{course.desc}</p>
-                    <p className="card-time">🕒 {course.duration} restantes</p>
-                  </div>
-
-                  <div className="card-progress-circle">
-                    <svg viewBox="0 0 36 36" className="circular-chart">
-                      <path className="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                      <path className="circle" strokeDasharray="60, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                      <text x="18" y="20.35" className="percentage">60%</text>
-                    </svg>
-                  </div>
-                </div>
-                <div className="card-divider"></div>
-                <button className="btn-continuar-premium">Continuar</button>
-              </div>
-            ))}
-          </div>
-        )}
-      </main>
-
-      {/* 📱 MENU INFERIOR MOBILE (Ajustado para bater com o CSS do Home) */}
-      <nav className="mobile-bottom-nav">
-        <button className="nav-btn" onClick={onNavigate}>
-          <span className="icon">🏠</span><span>Início</span>
-        </button>
-        <button className="nav-btn active">
-          <span className="icon">▶️</span><span>Meus Cursos</span>
-        </button>
-        <button className="nav-btn"><span className="icon">📖</span><span>Mentor+</span></button>
-        <button className="nav-btn"><span className="icon">👤</span><span>Meu Perfil</span></button>
+        <div className="nav-user">
+          <span className="user-greeting">Ola, {primeiroNome}!</span>
+          <button onClick={handleLogout} className="btn-logout">Sair</button>
+        </div>
       </nav>
 
+      <main className="main-content">
+        <section className="section-container">
+          <h3 className="section-title">Meus Cursos</h3>
+
+          {carregando ? (
+            <p className="my-courses-info">Carregando seus cursos...</p>
+          ) : cursosMatriculados.length === 0 ? (
+            <div className="my-courses-empty">
+              <img src={semCursoImg} alt="Sem cursos" />
+              <p className="my-courses-empty-title">Sem cursos matriculados</p>
+              <p className="my-courses-empty-description">Voce ainda nao iniciou nenhum curso.</p>
+              <button className="btn-explorar" onClick={() => navigate('/')}>Explorar cursos</button>
+            </div>
+          ) : (
+            <div className="cards-grid">
+              {cursosMatriculados.map((matricula) => (
+                <div className="course-card" key={matricula.id}>
+                  <div className="course-image" />
+                  <div className="course-info">
+                    <h4>{matricula.course.title}</h4>
+                    <p className="my-courses-card-description">
+                      {matricula.course.description || 'Curso de capacitacao em educacao inclusiva.'}
+                    </p>
+                    <div className="progress-bar-bg">
+                      <div className="progress-bar-fill" style={{ width: '50%' }} />
+                    </div>
+                    <p className="my-courses-progress-label">50% concluido</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+      </main>
     </div>
   );
 }
