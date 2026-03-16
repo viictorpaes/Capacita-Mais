@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import './Mentor.css'; // Vamos criar este arquivo a seguir
+import './Mentor.css';
 import logoCapacita from '../assets/logo.png';
 
 export function Mentor() {
@@ -9,8 +9,8 @@ export function Mentor() {
     name: localStorage.getItem('userName') || 'Aluno(a)' 
   });
   
-  // Estados para controlar o fluxo da IA
-  const [etapa, setEtapa] = useState('formulario'); // 'formulario', 'carregando', 'resultado'
+
+  const [etapa, setEtapa] = useState('formulario'); 
   const [formulario, setFormulario] = useState({
     faixaEtaria: '',
     neurodivergencia: '',
@@ -46,14 +46,14 @@ export function Mentor() {
       const mockTrilha = [
         {
           id: 1,
-          titulo: Fundamentos: ${formulario.neurodivergencia || 'Neurodiversidade'},
-          descricao: Entenda as bases teóricas aplicadas para a faixa etária de ${formulario.faixaEtaria || 'seus alunos'}.,
+          titulo: `Fundamentos: ${formulario.neurodivergencia || 'Neurodiversidade'}`,
+          descricao: `Entenda as bases teóricas aplicadas para a faixa etária de ${formulario.faixaEtaria || 'seus alunos'}.`,
           tempo: formulario.tempoDisponivel === '15min' ? '2 aulas de 5min' : 'Módulo de 1h'
         },
         {
           id: 2,
-          titulo: Estratégias para ${formulario.localAtuacao || 'o seu contexto'},
-          descricao: Aplicações práticas e adaptações de materiais no formato de ${formulario.formato || 'conteúdo misto'}.,
+          titulo: `Estratégias para ${formulario.localAtuacao || 'o seu contexto'}`,
+          descricao: `Aplicações práticas e adaptações de materiais no formato de ${formulario.formato || 'conteúdo misto'}.`,
           tempo: formulario.tempoDisponivel === '15min' ? '3 aulas de 5min' : 'Módulo de 2h'
         },
         {
