@@ -4,6 +4,7 @@ import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { Mentor } from './pages/Mentor';
 import { Profile } from './pages/Profile';
+import MeusCursos from './pages/meusCursos';
 
 const estaLogado = () => {
   const token = localStorage.getItem('token');
@@ -30,6 +31,11 @@ export default function App() {
         />
 
         <Route path="/mentor" element={<Mentor />} />
+        <Route path="/cursos" element={
+          <RotaProtegida>
+            <MeusCursos />
+          </RotaProtegida>}
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Register />} />
         <Route path="/perfil" element={
