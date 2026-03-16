@@ -1,140 +1,182 @@
+import { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import './Home.css';
+import logoCapacita from '../assets/logo.png';
 
-function Home({ user, onLogout }) {
+export function Home() {
+  const navigate = useNavigate();
+
+  const [usuario, setUsuario] = useState({ 
+    name: localStorage.getItem('userName') || 'Aluno' 
+  });
+  const [cursosMatriculados, setCursosMatriculados] = useState([]);
+  const [cursosDisponiveis, setCursosDisponiveis] = useState([]);
+  const [carregando, setCarregando] = useState(true);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    const buscarDados = async () => {
+      try {
+        const respostaCursos = await fetch('http://localhost:3000/api/courses');
+        
+        if (respostaCursos.ok) {
+          const cursosDoBanco = await respostaCursos.json();
+          const cursosPublicados = cursosDoBanco
+            .filter(curso => curso.isPublished)
+            .slice(0, 8);
+          setCursosDisponiveis(cursosPublicados);
+        }
+
+        if (token) {
+          const tokenParts = token.split('.');
+          const payloadBase64 = tokenParts[1].replace(/-/g, '+').replace(/_/g, '/');
+          const payloadDecodificado = JSON.parse(window.atob(payloadBase64));
+          const userId = payloadDecodificado.sub; 
+
+          const respostaUsuario = await fetch(`http://localhost:3000/api/users/${userId}`, {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+
+          if (respostaUsuario.ok) {
+            const dadosUsuario = await respostaUsuario.json();
+            setCursosMatriculados(dadosUsuario.enrollments || []);
+          }
+        }
+
+      } catch (erro) {
+        console.error("Erro fatal ao conectar com o back-end:", erro);
+        setCursosDisponiveis([]); 
+      } finally {
+        setCarregando(false);
+      }
+    };
+
+    buscarDados();
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userName');
+    navigate('/login');
+  };
+
+  const primeiroNome = usuario.name.split(' ')[0];
+
+  const formatarPreco = (valor) => {
+    const numero = Number(valor); 
+    if (numero === 0) return 'Gratuito';
+    return `R$ ${numero.toFixed(2).replace('.', ',')}`;
+  };
+
   return (
     <div className="home-container">
-      
-      
-      <header className="desktop-header">
-        <div className="desktop-logo">Capacita<span>+</span></div>
-        <nav className="desktop-nav">
-          <button className="active">Início</button>
-          <button>Meus Cursos</button>
-          <button>Mentor+</button>
-          <button>Meu Perfil</button>
-          <button onClick={onLogout} style={{ color: '#d9534f', fontWeight: 'bold' }}>Sair</button>
-        </nav>
-        <div className="desktop-user">
-          <button className="search-btn">🔍</button>
-          <div className="user-avatar">👤</div>
+      <nav className="navbar">
+        <img src={logoCapacita} alt="Capacita+" className="nav-logo" />
+        <div className="nav-links">
+          <Link to="/" className="active">Início</Link>
+          <Link to="/cursos">Meus Cursos</Link>
+          <Link to="/mentor">Mentor +</Link>
+          <Link to="/perfil">Meu Perfil</Link>
         </div>
-      </header>
-
-     
-      <header className="mobile-header">
-        <h2>Olá, {user?.name || 'Usuário'}</h2>
-        <button className="search-btn">🔍</button>
-        <button onClick={onLogout} style={{ background: 'none', border: 'none', color: '#d9534f', fontWeight: 'bold', cursor: 'pointer' }}>
-          Sair
-        </button>
-      </header>
+        <div className="nav-user">
+          <span className="user-greeting">Olá, {primeiroNome}!</span>
+          <button onClick={handleLogout} className="btn-logout">Sair</button>
+        </div>
+      </nav>
 
       <main className="main-content">
-        
-       
-        <section className="banner">
-          <div className="banner-info">
-            <h3>Plano Premium</h3>
-            <p>Desbloqueie ferramentas para maior produtividade</p>
-            <button className="btn-conheca">Conheça agora</button>
+        <section className="promo-banner">
+          <div>
+            <h2>Seja Premium e libere todos os conteúdos!</h2>
+            <p>Acesse Mentorias exclusivas e certificados validados pelo MEC.</p>
           </div>
-          <div className="banner-illustration">☁️🛡️</div>
-          <div className="banner-dots">
-            <span className="dot active"></span><span className="dot"></span><span className="dot"></span><span className="dot"></span><span className="dot"></span>
+          <Link to="/premium" className="btn-premium">Conhecer Planos</Link>
+        </section>
+
+        <section className="section-container">
+          {carregando ? (
+            <h3 className="section-title">Buscando informações...</h3>
+          ) : (
+            <>
+              <h3 className="section-title">
+                {cursosMatriculados.length > 0 ? 'Continue de onde parou' : 'Cursos que você pode gostar'}
+              </h3>
+              <div className="cards-grid">
+                {cursosMatriculados.length > 0 ? (
+                  cursosMatriculados.map((matricula) => (
+                    <div className="course-card" key={matricula.id}>
+                      <div className="course-image"></div>
+                      <div className="course-info">
+                        <h4>{matricula.course.title}</h4>
+                        {/* Mantido estático em 50% por enquanto, já que não há coluna de progresso no BD */}
+                        <div className="progress-bar-bg">
+                          <div className="progress-bar-fill" style={{ width: '50%' }}></div>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p style={{ color: '#666' }}>Você ainda não está matriculado em nenhum curso.</p>
+                )}
+              </div>
+            </>
+          )}
+        </section>
+        
+        <section className="section-container">
+          <h3 className="section-title">Explorar Categorias</h3>
+          <div className="categories-grid">
+            <div className="category-card">TDAH</div>
+            <div className="category-card">TEA</div>
+            <div className="category-card">Dislexia</div>
+            <div className="category-card">Altas Habilidades / Superdotação</div>
+            <div className="category-card">Educação Inclusiva</div>
           </div>
         </section>
 
-        
-        <section className="section">
-          <h3 className="section-title">Categorias</h3>
-          <div className="cards-wrapper">
-            <div className="card category-card">
-              <div className="cat-info">
-                <h4>TEA</h4><p>5 Cursos</p>
-              </div>
-              <div className="cat-icon">🧩</div>
-            </div>
-            <div className="card category-card">
-              <div className="cat-info">
-                <h4>TDAH</h4><p>15 Cursos</p>
-              </div>
-              <div className="cat-icon">🧠</div>
-            </div>
-            <div className="card category-card">
-              <div className="cat-info">
-                <h4>Dislexia</h4><p>13 Cursos</p>
-              </div>
-              <div className="cat-icon">📚</div>
-            </div>
-          </div>
-        </section>
-
-      
-        <section className="section">
+        <section className="section-container">
           <h3 className="section-title">Cursos Mais Procurados</h3>
-          <div className="cards-wrapper">
-            <div className="card course-card">
-              <div className="course-img">🎀</div>
-              <div className="course-info">
-                <h4>TEA Nível 1</h4>
-                <p>4.5 ★ <span className="students">10.5k Estudantes</span></p>
-              </div>
+          
+          {carregando ? (
+             <p style={{ color: '#666' }}>Carregando catálogo...</p>
+          ) : (
+            <div className="cards-grid">
+              {cursosDisponiveis.length > 0 ? (
+                cursosDisponiveis.map((curso) => (
+                  <div className="course-card" key={curso.id}>
+                    <div className="course-image"></div>
+                    <div className="course-info">
+                      <h4>{curso.title}</h4>
+                      <p style={{ fontSize: '14px', color: '#666', marginBottom: '15px' }}>
+                        {curso.description}
+                      </p>
+                      <span style={{ 
+                        fontSize: '15px', 
+                        fontWeight: 'bold', 
+                        color: curso.price === 0 ? '#00796b' : '#333',
+                        backgroundColor: curso.price === 0 ? '#e0f2f1' : 'transparent',
+                        padding: curso.price === 0 ? '4px 8px' : '0',
+                        borderRadius: '4px'
+                      }}>
+                        {formatarPreco(curso.price)}
+                      </span>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p style={{ color: '#666', fontStyle: 'italic' }}>
+                  Não existem cursos disponíveis no momento.
+                </p>
+              )}
             </div>
-            <div className="card course-card">
-              <div className="course-img">🎀</div>
-              <div className="course-info">
-                <h4>TEA Nível 2</h4>
-                <p>4.5 ★ <span className="students">10.5k Estudantes</span></p>
-              </div>
-            </div>
-            <div className="card course-card">
-              <div className="course-img">🧩</div>
-              <div className="course-info">
-                <h4>Inclusão Escolar</h4>
-                <p>4.8 ★ <span className="students">8.2k Estudantes</span></p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-      
-        <section className="section">
-          <h3 className="section-title">Ferramentas Mais Utilizadas</h3>
-          <div className="cards-wrapper">
-            <div className="card tool-card">
-              <div className="tool-icon">📋</div>
-              <div className="tool-info">
-                <h4>SENSORISCAN</h4>
-                <p>Ferramenta prática para avaliar...</p>
-              </div>
-            </div>
-            <div className="card tool-card">
-              <div className="tool-icon">💬</div>
-              <div className="tool-info">
-                <h4>COMUNICAVISUAL</h4>
-                <p>Edição de rotinas visuais...</p>
-              </div>
-            </div>
-            <div className="card tool-card">
-              <div className="tool-icon">📅</div>
-              <div className="tool-info">
-                <h4>ROTINAPLUS</h4>
-                <p>Organização de horários...</p>
-              </div>
-            </div>
-          </div>
+          )}
         </section>
 
       </main>
-
-      
-      <nav className="mobile-bottom-nav">
-        <button className="nav-btn active"><span className="icon">🏠</span><span>Início</span></button>
-        <button className="nav-btn"><span className="icon">▶️</span><span>Meus Cursos</span></button>
-        <button className="nav-btn"><span className="icon">📖</span><span>Mentor+</span></button>
-        <button className="nav-btn"><span className="icon">👤</span><span>Meu Perfil</span></button>
-      </nav>
-
     </div>
   );
 }
