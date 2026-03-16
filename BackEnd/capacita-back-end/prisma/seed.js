@@ -14,19 +14,28 @@ async function main() {
 
   const usuariosBase = [
     {
+      name: 'Administrador Capacita',
+      email: 'admin@capacita.com',
+      password: senhaPadrao,
+      role: 'ADMIN',
+    },
+    {
       name: 'Ana Souza',
       email: 'ana@capacita.com',
       password: senhaPadrao,
+      role: 'STUDENT',
     },
     {
       name: 'Bruno Lima',
       email: 'bruno@capacita.com',
       password: senhaPadrao,
+      role: 'STUDENT',
     },
     {
       name: 'Carla Mendes',
       email: 'carla@capacita.com',
       password: senhaPadrao,
+      role: 'STUDENT',
     },
   ];
 
@@ -110,6 +119,7 @@ async function main() {
   });
 
   console.log('Seed concluida com sucesso.');
+  console.log('Admin: admin@capacita.com');
   console.log('Usuarios de teste: ana@capacita.com, bruno@capacita.com, carla@capacita.com');
   console.log('Senha padrao para todos: 123456');
 }

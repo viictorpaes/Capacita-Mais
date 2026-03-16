@@ -1,0 +1,82 @@
+.admin-description {
+  color: #666;
+}
+
+.admin-panel-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.admin-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.admin-header-row h4 {
+  color: #333;
+  font-size: 18px;
+}
+
+.admin-header-row span {
+  color: #777;
+  font-size: 14px;
+}
+
+.admin-table-wrapper {
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-table th,
+.admin-table td {
+  text-align: left;
+  padding: 12px 10px;
+  border-bottom: 1px solid #eee;
+  color: #444;
+  font-size: 14px;
+}
+
+.admin-action-group {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-admin-secondary,
+.btn-admin-danger {
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-admin-secondary {
+  background-color: #00796b;
+}
+
+.btn-admin-secondary:hover {
+  background-color: #005f56;
+}
+
+.btn-admin-danger {
+  background-color: #d9363e;
+}
+
+.btn-admin-danger:hover {
+  background-color: #b92b34;
+}
+
+.btn-admin-secondary:disabled,
+.btn-admin-danger:disabled {
+  background-color: #bdbdbd;
+  cursor: not-allowed;
+}

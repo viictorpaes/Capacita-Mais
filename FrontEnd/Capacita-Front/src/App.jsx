@@ -5,6 +5,7 @@ import { Register } from './pages/Register';
 import { Mentor } from './pages/Mentor';
 import { Profile } from './pages/Profile';
 import MeusCursos from './pages/meusCursos';
+import { Admin } from './pages/Admin';
 
 const estaLogado = () => {
   const token = localStorage.getItem('token');
@@ -12,10 +13,26 @@ const estaLogado = () => {
   return token !== null; 
 };
 
+const ehAdmin = () => {
+  return localStorage.getItem('userRole') === 'ADMIN';
+};
+
 const RotaProtegida = ({ children }) => {
   if (!estaLogado()) {
     return <Navigate to="/login" replace />;
   }
+  return children;
+};
+
+const RotaAdmin = ({ children }) => {
+  if (!estaLogado()) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (!ehAdmin()) {
+    return <Navigate to="/" replace />;
+  }
+
   return children;
 };
 
@@ -42,6 +59,12 @@ export default function App() {
           <RotaProtegida>
             <Profile />
           </RotaProtegida>}
+        />
+
+        <Route path="/admin" element={
+          <RotaAdmin>
+            <Admin />
+          </RotaAdmin>}
         />
       </Routes>
     </BrowserRouter>

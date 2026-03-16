@@ -27,8 +27,13 @@ export function Login() {
       if (resposta.ok) {
         localStorage.setItem('token', dados.access_token); 
         localStorage.setItem('userName', dados.user.name);
-        
-        navigate('/');
+        localStorage.setItem('userRole', dados.user.role || 'STUDENT');
+
+        if (dados.user.role === 'ADMIN') {
+          navigate('/admin');
+        } else {
+          navigate('/');
+        }
       } else {
         showError(dados.message || 'E-mail ou senha incorretos.');
       }

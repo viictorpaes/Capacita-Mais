@@ -6,11 +6,17 @@ datasource db {
   provider = "postgresql"
 }
 
+enum Role {
+  STUDENT
+  ADMIN
+}
+
 model User {
   id          String       @id @default(uuid())
   name        String
   email       String       @unique
   password    String
+  role        Role         @default(STUDENT)
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
   enrollments Enrollment[]
