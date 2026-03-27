@@ -1,0 +1,1 @@
+<h1 align="center"> <img src="./Capacita-Front/public/vite.svg"> Frontending </h1>
