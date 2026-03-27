@@ -12,7 +12,7 @@
 ├── .env <img src="https://img.shields.io/badge/Config-000000?style=for-the-badge&logo=dotenv&logoColor=white" height="18"/>
 ├── .gitignore <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=black" height="18"/>
 ├── .prettierrc <img src="https://img.shields.io/badge/Format-F7B93E?style=for-the-badge&logo=prettier&logoColor=black" height="18"/>
-├── docker-compose.yml <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" height="18"/>
+├── docker-compose.yml <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=black" height="18"/>
 ├── eslint.config.mjs <img src="https://img.shields.io/badge/Lint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white" height="18"/>
 ├── nest-cli.json <img src="https://img.shields.io/badge/CLI-E0234E?style=for-the-badge&logo=nestjs&logoColor=white" height="18"/>
 ├── openapi.yaml <img src="https://img.shields.io/badge/Swagger/Doc_da_API-85EA2D?style=for-the-badge&logo=swagger&logoColor=black" height="18"/>
@@ -20,8 +20,8 @@
 ├── package.json <img src="https://img.shields.io/badge/Manifest-CB3837?style=for-the-badge&logo=npm&logoColor=white" height="18"/>
 ├── prisma.config.mjs <img src="https://img.shields.io/badge/Prisma_Config-2D3748?style=for-the-badge&logo=prisma&logoColor=white" height="18"/>
 ├── README.md <img src="https://img.shields.io/badge/Markdown-FFFFFF?style=for-the-badge&logo=markdown&logoColor=000000" height="18"/>
-├── tsconfig.build.json <img src="https://img.shields.io/badge/TS_Build-3178C6?style=for-the-badge&logo=typescript&logoColor=white" height="18"/>
-└── tsconfig.json <img src="https://img.shields.io/badge/TS_Config-3178C6?style=for-the-badge&logo=typescript&logoColor=white" height="18"/>
+├── tsconfig.build.json <img src="https://img.shields.io/badge/TS_Build-3178C6?style=for-the-badge&logo=typescript&logoColor=black" height="18"/>
+└── tsconfig.json <img src="https://img.shields.io/badge/TS_Config-3178C6?style=for-the-badge&logo=typescript&logoColor=black" height="18"/>
 </pre>
 
 
@@ -29,7 +29,7 @@
 
 <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; width: 100%;">
   <img src="https://img.shields.io/badge/Node.js-v22.x+-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" height="25" />
-  <img src="https://img.shields.io/badge/TypeScript-v5.7+-3178C6?style=for-the-badge&logo=typescript&logoColor=white" height="25" />
+  <img src="https://img.shields.io/badge/TypeScript-v5.7+-3178C6?style=for-the-badge&logo=typescript&logoColor=black" height="25" />
   <img src="https://img.shields.io/badge/NestJS-v11.0+-E0234E?style=for-the-badge&logo=nestjs&logoColor=white" height="25" />
   <img src="https://img.shields.io/badge/Prisma-v7.4+-2D3748?style=for-the-badge&logo=prisma&logoColor=white" height="25" />
   <img src="https://img.shields.io/badge/PostgreSQL-v8.19+-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" height="25" />

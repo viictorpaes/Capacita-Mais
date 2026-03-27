@@ -3,11 +3,11 @@
 |README.md<img src="https://img.shields.io/badge/Markdown-FFFFFF?style=for-the-badge&logo=markdown&logoColor=000000" height="18"/>
 |Capacita-Front/
 ├── node_modules/<img src="https://img.shields.io/badge/Dependencies-CB3837?style=for-the-badge&logo=npm&logoColor=white" height="18"/>
-├── public/ <img src="https://img.shields.io/badge/Public-646CFF?style=for-the-badge&logo=vite&logoColor=white" height="18"/>
+├── public/ <img src="https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E" height="18">
 ├── src/
-│   ├── assets/ <img src="https://img.shields.io/badge/Assets-646CFF?style=for-the-badge&logo=vite&logoColor=white" height="18"/>
+│   ├── assets/ <img src="https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E" height="18">
 │   ├── components/ <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black" height="18"/>
-│   ├── hooks/ <img src="https://img.shields.io/badge/Hooks-3178C6?style=for-the-badge&logo=typescript&logoColor=white" height="18"/>
+│   ├── hooks/ <img src="https://img.shields.io/badge/Hooks-3178C6?style=for-the-badge&logo=typescript&logoColor=black" height="18"/>
 │   ├── pages/ <img src="https://img.shields.io/badge/Pages-000000?style=for-the-badge&logo=next.js&logoColor=white" height="18"/>
 │   ├── App.css <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" height="18"/>
 │   ├── App.jsx <img src="https://img.shields.io/badge/App-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" height="18"/>
@@ -22,7 +22,7 @@
 
 <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; width: 100%;">
   <img src="https://img.shields.io/badge/Node.js-v22.x+-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" height="25" />
-  <img src="https://img.shields.io/badge/TypeScript-v5.7+-3178C6?style=for-the-badge&logo=typescript&logoColor=white" height="25" />
+  <img src="https://img.shields.io/badge/TypeScript-v5.7+-3178C6?style=for-the-badge&logo=typescript&logoColor=black" height="25" />
   <img src="https://img.shields.io/badge/Vite-v7.3+-646CFF?style=for-the-badge&logo=vite&logoColor=white" height="25" />
   <img src="https://img.shields.io/badge/React-v19.2+-61DAFB?style=for-the-badge&logo=react&logoColor=black" height="25" />
   <img src="https://img.shields.io/badge/React_Router-v7.13+-CA4245?style=for-the-badge&logo=reactrouter&logoColor=white" height="25" />
@@ -30,7 +30,7 @@
 
 ---
 
-<h2 align="center"> 📂 Anatomia Detalhada do Projeto: </h2>
+<h2 align="center"> 🏰 Construção Detalhada do Projeto: </h2>
 
 ### 📁 Diretórios Principais:
 

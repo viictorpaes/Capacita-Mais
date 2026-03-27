@@ -31,23 +31,23 @@
 <pre>
 |README.md<img src="https://img.shields.io/badge/Markdown-FFFFFF?style=for-the-badge&logo=markdown&logoColor=000000" height="18"/>
 |Capacita-Mais/
-├── BackEnd<img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" height="19"/><img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" height="19"/>/
-├── FrontEnd<img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white" height="19"/><img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" height="19"/>/
+├── BackEnd<img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" height="19"/><img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=black" height="19"/>/
+├── FrontEnd<img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white" height="19"/><img src="https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E" height="19">/
 ├── docker-compose.yml<img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=black" height="19"/>
 └── README.md<img src="https://img.shields.io/badge/Markdown-FFFFFF?style=for-the-badge&logo=markdown&logoColor=000000" height="18"/>
 </pre>
 
 
-<h2 align="left"> <img src="./FrontEnd/Capacita-Front/public/vite.svg"> Frontending </h2>
+<h2 align="left"> <img src="./FrontEnd/Capacita-Front/public/vite.svg">Frontending </h2>
 <pre>
 |README.md<img src="https://img.shields.io/badge/Markdown-FFFFFF?style=for-the-badge&logo=markdown&logoColor=000000" height="18"/>
 |Capacita-Front/
 ├── node_modules/<img src="https://img.shields.io/badge/Dependencies-CB3837?style=for-the-badge&logo=npm&logoColor=white" height="18"/>
-├── public/ <img src="https://img.shields.io/badge/Public-646CFF?style=for-the-badge&logo=vite&logoColor=white" height="18"/>
+├── public/ <img src="https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E" height="18">
 ├── src/
-│   ├── assets/ <img src="https://img.shields.io/badge/Assets-646CFF?style=for-the-badge&logo=vite&logoColor=white" height="18"/>
+│   ├── assets/ <img src="https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E" height="18">
 │   ├── components/ <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black" height="18"/>
-│   ├── hooks/ <img src="https://img.shields.io/badge/Hooks-3178C6?style=for-the-badge&logo=typescript&logoColor=white" height="18"/>
+│   ├── hooks/ <img src="https://img.shields.io/badge/Hooks-3178C6?style=for-the-badge&logo=typescript&logoColor=black" height="18"/>
 │   ├── pages/ <img src="https://img.shields.io/badge/Pages-000000?style=for-the-badge&logo=next.js&logoColor=white" height="18"/>
 │   ├── App.css <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" height="18"/>
 │   ├── App.jsx <img src="https://img.shields.io/badge/App-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" height="18"/>
@@ -71,7 +71,7 @@
 ├── .env <img src="https://img.shields.io/badge/Config-000000?style=for-the-badge&logo=dotenv&logoColor=white" height="18"/>
 ├── .gitignore <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=black" height="18"/>
 ├── .prettierrc <img src="https://img.shields.io/badge/Format-F7B93E?style=for-the-badge&logo=prettier&logoColor=black" height="18"/>
-├── docker-compose.yml <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" height="18"/>
+├── docker-compose.yml <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=black" height="18"/>
 ├── eslint.config.mjs <img src="https://img.shields.io/badge/Lint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white" height="18"/>
 ├── nest-cli.json <img src="https://img.shields.io/badge/CLI-E0234E?style=for-the-badge&logo=nestjs&logoColor=white" height="18"/>
 ├── openapi.yaml <img src="https://img.shields.io/badge/Swagger/Doc_da_API-85EA2D?style=for-the-badge&logo=swagger&logoColor=black" height="18"/>
@@ -79,8 +79,8 @@
 ├── package.json <img src="https://img.shields.io/badge/Manifest-CB3837?style=for-the-badge&logo=npm&logoColor=white" height="18"/>
 ├── prisma.config.mjs <img src="https://img.shields.io/badge/Prisma_Config-2D3748?style=for-the-badge&logo=prisma&logoColor=white" height="18"/>
 ├── README.md <img src="https://img.shields.io/badge/Markdown-FFFFFF?style=for-the-badge&logo=markdown&logoColor=000000" height="18"/>
-├── tsconfig.build.json <img src="https://img.shields.io/badge/TS_Build-3178C6?style=for-the-badge&logo=typescript&logoColor=white" height="18"/>
-└── tsconfig.json <img src="https://img.shields.io/badge/TS_Config-3178C6?style=for-the-badge&logo=typescript&logoColor=white" height="18"/>
+├── tsconfig.build.json <img src="https://img.shields.io/badge/TS_Build-3178C6?style=for-the-badge&logo=typescript&logoColor=black" height="18"/>
+└── tsconfig.json <img src="https://img.shields.io/badge/TS_Config-3178C6?style=for-the-badge&logo=typescript&logoColor=black" height="18"/>
 </pre>
 
 
@@ -113,9 +113,18 @@
 
 ###
 <ul>
-<li><strong>Windows🪟:</strong> <code>Ctrl</code> + <code>j</code> (tecla de crase)</li>
-<li><strong>Linux🐧:</strong> <code>Ctrl</code> + <code>j</code> (tecla de crase)</li>
-<li><strong>macOS🍎:</strong> <code>Command</code> + <code>j</code> (tecla de crase)</li>
+  <li>
+  Windows <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows8/windows8-original.svg" width="16"/> <br>
+    <code>Ctrl</code> + <code>j</code> (tecla de crase)
+  </li> <br>
+  <li>
+    <img src="https://img.shields.io/badge/Linux-FCC624?style=flat&logo=linux&logoColor=black" alt="Linux"/> <br>
+    <code>Ctrl</code> + <code>j</code> (tecla de crase)
+  </li> <br>
+  <li>
+    <img src="https://img.shields.io/badge/macOS-white?style=flat&logo=apple&logoColor=black" alt="macOS"/> <br>
+    <code>Command</code> + <code>j</code> (tecla de crase)
+  </li>
 </ul>
 
 <br>
@@ -125,7 +134,7 @@
 
 ```bash
 # Clone o repositório:
-git clone https://github.com/viictorpaes/Capacita-Mais
+git clone (https://github.com/viictorpaes/Capacita-Mais)
 
 #Acesse ele com o VSCODE, ou a sua IDE
 
@@ -197,5 +206,3 @@ Execute os comandos dentro das respectivas pastas (front e back):
   <li><strong>Banco de Dados (Back-end):</strong> <code>npx prisma generate</code></li>
   <li><strong>Rodar em Desenvolvimento:</strong> <code>npm run dev</code> (Front) ou <code>npm run start:dev</code> (Back)</li>
 </ul>
-
----
