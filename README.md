@@ -151,7 +151,7 @@ cd capacita-back-end
 ls
 
 #inicializando o docker e o prisma: 
-docker compose up
+docker-compose up -d
 npx prima migrate
 npx push db
 npx prisma studio (acessa o banco na web) 
