@@ -29,8 +29,7 @@
 <h2 align="center"> 🏛️ Arquitetura Geral do Projeto: </h2>
 
 <pre>
-|README.md<img src="https://img.shields.io/badge/Markdown-FFFFFF?style=for-the-badge&logo=markdown&logoColor=000000" height="18"/>
-|Capacita-Mais/
+Capacita-Mais/
 ├── BackEnd<img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" height="19"/><img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=black" height="19"/>/
 ├── FrontEnd<img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white" height="19"/><img src="https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E" height="19">/
 ├── docker-compose.yml<img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=black" height="19"/>
@@ -54,6 +53,7 @@
 │   ├── index.css <img src="https://img.shields.io/badge/Styles-1572B6?style=for-the-badge&logo=css3&logoColor=white" height="18"/>
 │   └── main.jsx <img src="https://img.shields.io/badge/Main-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" height="18"/>
 ├── .gitignore <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=black" height="18"/>
+|── README.md<img src="https://img.shields.io/badge/Markdown-FFFFFF?style=for-the-badge&logo=markdown&logoColor=000000" height="18"/>
 ├── eslint.config.js <img src="https://img.shields.io/badge/Lint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white" height="18"/>
 └── index.html <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=black" height="18"/>
 </pre>
