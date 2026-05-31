@@ -49,9 +49,8 @@ Capacita-Mais/
 <pre>
 ├── README.md<img src="https://img.shields.io/badge/Markdown-111827?style=for-the-badge&logo=markdown&logoColor=white" height="18"/>
 └── Capacita-Front/
-    ├── node_modules/<img src="https://img.shields.io/badge/Dependencies-111827?style=for-the-badge&logo=npm&logoColor=CB3837" height="18"/>
-    ├── public <img src="https://img.shields.io/badge/Vite-111827?style=for-the-badge&logo=vite&logoColor=646CFF" height="18">/
-    ├── src/
+    ├── public<img src="https://img.shields.io/badge/Vite-111827?style=for-the-badge&logo=vite&logoColor=646CFF" height="18">/
+    ├── src<img src="https://img.shields.io/badge/Source-111827?style=for-the-badge&logo=vite&logoColor=646CFF" height="18"/>/
     │   ├── assets <img src="https://img.shields.io/badge/Assets-111827?style=for-the-badge&logo=vite&logoColor=646CFF" height="18">/
     │   ├── components <img src="https://img.shields.io/badge/React-111827?style=for-the-badge&logo=react&logoColor=61DAFB" height="18"/>/
     │   ├── hooks <img src="https://img.shields.io/badge/Hooks-111827?style=for-the-badge&logo=typescript&logoColor=3178C6" height="18"/>/
