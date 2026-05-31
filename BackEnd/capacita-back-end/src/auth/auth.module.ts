@@ -13,16 +13,21 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './jwt.strategy';
 
 @Module({
-  imports: [
+  imports: 
+  [
     PassportModule,
-    JwtModule.register({
-      secret: process.env.JWT_SECRET || 'changeme',
-      signOptions: { expiresIn: '1h' },
-    }),
+    JwtModule.register
+    (
+      {
+        secret: process.env.JWT_SECRET || 'changeme',
+        signOptions: { expiresIn: '1h' },
+      }
+    ),
 
   ],
   providers: [AuthService, PrismaService, JwtStrategy],
   controllers: [AuthController],
 })
 
-export class AuthModule { }
+export class AuthModule 
+{}

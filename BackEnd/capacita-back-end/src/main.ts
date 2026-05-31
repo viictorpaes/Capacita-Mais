@@ -6,14 +6,16 @@ import { AppModule } from './app.module';
 
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
-async function bootstrap() {
+async function bootstrap() 
+{
   const app = await NestFactory.create(AppModule);
   app.enableCors();
   app.setGlobalPrefix('api');
 
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV !== 'production') 
+  {
     const config = new DocumentBuilder()
-      .setTitle('Capacita Mais API')
+      .setTitle('Capacita+ API')
       .setDescription('Documentação do MVP Capacita Mais')
       .setVersion('1.0')
       .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }, 'bearerAuth')

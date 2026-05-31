@@ -1,4 +1,5 @@
-export class CreateEnrollmentDto {
+export class CreateEnrollmentDto 
+{
   userId!: string;
   courseId!: string;
 }

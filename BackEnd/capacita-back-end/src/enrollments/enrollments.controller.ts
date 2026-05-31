@@ -13,31 +13,43 @@ import { EnrollmentsService } from './enrollments.service';
 
 
 @Controller('enrollments')
-export class EnrollmentsController {
+export class EnrollmentsController 
+{
   constructor(private readonly enrollmentsService: EnrollmentsService) {}
 
   @Post()
-  create(@Body() createEnrollmentDto: CreateEnrollmentDto) {
+  create(@Body() createEnrollmentDto: CreateEnrollmentDto) 
+  {
     return this.enrollmentsService.create(createEnrollmentDto);}
 
   @Get()
-  findAll() {
-    return this.enrollmentsService.findAll();}
+  findAll() 
+  {
+    return this.enrollmentsService.findAll();
+  }
 
  @Get('user/:userId')
-  findByUser(@Param('userId') userId: string) {
-  return this.enrollmentsService.findByUser(userId);}
+  findByUser(@Param('userId') userId: string) 
+  {
+    return this.enrollmentsService.findByUser(userId);
+  }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-  return this.enrollmentsService.findOne(id);}
+  findOne(@Param('id') id: string) 
+  {
+    return this.enrollmentsService.findOne(id);
+  }
 
   @Patch(':id/cancel')
-  cancel(@Param('id') id: string) {
-  return this.enrollmentsService.cancel(id);}
+  cancel(@Param('id') id: string) 
+  {
+    return this.enrollmentsService.cancel(id);
+  }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-  return this.enrollmentsService.remove(id);}
+  remove(@Param('id') id: string) 
+  {
+    return this.enrollmentsService.remove(id);
+  }
     
 }

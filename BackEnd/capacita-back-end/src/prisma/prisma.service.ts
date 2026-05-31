@@ -8,7 +8,8 @@ export class PrismaService implements OnModuleInit, OnModuleDestroy {
   private prisma: PrismaClient;
   private pool: Pool;
 
-  constructor() {
+  constructor() 
+  {
     this.pool = new Pool({
       connectionString: process.env.DATABASE_URL,
     });
@@ -18,7 +19,8 @@ export class PrismaService implements OnModuleInit, OnModuleDestroy {
     this.prisma = new PrismaClient({ adapter });
   }
 
-  async onModuleInit() {
+  async onModuleInit() 
+  {
     await this.prisma.$connect();
   }
 
@@ -27,16 +29,18 @@ export class PrismaService implements OnModuleInit, OnModuleDestroy {
     await this.pool.end();
   }
 
-  // Expor métodos do Prisma
-  get user() {
+  get user() 
+  {
     return this.prisma.user;
   }
 
-  get course() {
+  get course() 
+  {
     return this.prisma.course;
   }
 
-  get enrollment() {
+  get enrollment() 
+  {
     return this.prisma.enrollment;
   }
 }

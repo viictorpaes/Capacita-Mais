@@ -4,21 +4,27 @@ import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 
 @Injectable()
-export class CoursesService {
+export class CoursesService 
+{
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createCourseDto: CreateCourseDto) {
+  async create(createCourseDto: CreateCourseDto) 
+  {
     return this.prisma.course.create({
-      data: {
+      data: 
+      {
         ...createCourseDto,
       },
     });
   }
 
-  async findAll() {
+  async findAll() 
+  {
     return this.prisma.course.findMany({
-      include: {
-        _count: {
+      include: 
+      {
+        _count: 
+        {
           select: { enrollments: true },
         },
       },
@@ -26,14 +32,19 @@ export class CoursesService {
     });
   }
 
-  async findOne(id: string) {
+  async findOne(id: string) 
+  {
     const course = await this.prisma.course.findUnique({
       where: { id },
       include: {
-        enrollments: {
-          select: {
-            user: {
-              select: {
+        enrollments: 
+        {
+          select: 
+          {
+            user: 
+            {
+              select: 
+              {
                 id: true,
                 name: true,
                 email: true,
@@ -46,14 +57,16 @@ export class CoursesService {
       },
     });
 
-    if (!course) {
+    if (!course) 
+    {
       throw new NotFoundException('Curso não encontrado.');
     }
 
     return course;
   }
 
-  async update(id: string, updateCourseDto: UpdateCourseDto) {
+  async update(id: string, updateCourseDto: UpdateCourseDto) 
+  {
     await this.findOne(id);
 
     return this.prisma.course.update({
@@ -64,7 +77,8 @@ export class CoursesService {
     });
   }
 
-  async remove(id: string) {
+  async remove(id: string) 
+  {
     await this.findOne(id);
 
     return this.prisma.course.delete({

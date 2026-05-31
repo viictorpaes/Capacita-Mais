@@ -7,8 +7,10 @@ import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
-export class AuthService {
-  constructor(
+export class AuthService 
+{
+  constructor
+  (
     private prisma: PrismaService,
     private jwtService: JwtService,
   ) {}
@@ -28,14 +30,17 @@ export class AuthService {
     return safeUser;
   }
 
-  async login(email: string, password: string) {
+  async login(email: string, password: string) 
+  {
     const user = await this.validateUser(email, password);
-    if (!user) throw new UnauthorizedException('Credenciais inválidas.');
+    if (!user) 
+      throw new UnauthorizedException('Credenciais inválidas.');
 
     const payload = { sub: user.id, email: user.email };
     return {
       access_token: this.jwtService.sign(payload),
-      user: {
+      user: 
+      {
         name: user.name,
         role: user.role,
       }      

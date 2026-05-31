@@ -11,4 +11,5 @@ import { PrismaService } from '../prisma/prisma.service';
   providers: [EnrollmentsService, PrismaService],
 })
 
-export class EnrollmentsModule {}
+export class EnrollmentsModule 
+{}

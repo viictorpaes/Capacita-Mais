@@ -1,6 +1,7 @@
 import { Role } from '@prisma/client';
 
-export class UpdateUserDto {
+export class UpdateUserDto 
+{
 	name?: string;
 	email?: string;
 	password?: string;

@@ -9,12 +9,15 @@ import { PrismaService } from '../prisma/prisma.service';
 import { CreateEnrollmentDto } from './dto/create-enrollment.dto';
 
 @Injectable()
-export class EnrollmentsService {
-  constructor(private readonly prisma: PrismaService) {
+export class EnrollmentsService 
+{
+  constructor(private readonly prisma: PrismaService) 
+  {
 
   }
 
-  async create(createEnrollmentDto: CreateEnrollmentDto) {
+  async create(createEnrollmentDto: CreateEnrollmentDto) 
+  {
     const { userId, courseId } = createEnrollmentDto;
 
     const [user, course] = await Promise.all([
@@ -30,21 +33,26 @@ export class EnrollmentsService {
       
     ]);
 
-    if (!user) {
+    if (!user) 
+    {
       throw new NotFoundException('Usuário não encontrado.');
     }
 
-    if (!course) {
+    if (!course) 
+    {
       throw new NotFoundException('Curso não encontrado.');
     }
 
-    if (!course.isPublished) {
+    if (!course.isPublished) 
+    {
       throw new ConflictException('Curso não está publicado.');
     }
 
     const existingEnrollment = await this.prisma.enrollment.findUnique({
-      where: {
-        userId_courseId: {
+      where: 
+      {
+        userId_courseId: 
+        {
           userId,
           courseId,
         },
@@ -54,26 +62,29 @@ export class EnrollmentsService {
 
     });
 
-    if (existingEnrollment) {
-      throw new ConflictException(
-        'Usuário já matriculado neste curso.',
-      );
+    if (existingEnrollment) 
+    {
+      throw new ConflictException('Usuário já matriculado neste curso.',);
     }
 
     return this.prisma.enrollment.create({
       data: createEnrollmentDto,
       include: {
 
-        user: {
-          select: {
+        user: 
+        {
+          select: 
+          {
             id: true,
             name: true,
             email: true,
           },
         },
 
-        course: {
-          select: {
+        course: 
+        {
+          select: 
+          {
             id: true,
             title: true,
             description: true,
@@ -85,20 +96,26 @@ export class EnrollmentsService {
     });
   }
 
-  async findAll() {
+  async findAll() 
+  {
     return this.prisma.enrollment.findMany({
-      include: {
+      include: 
+      {
 
-        user: {
-          select: {
+        user: 
+        {
+          select: 
+          {
             id: true,
             name: true,
             email: true,
           },
         },
 
-        course: {
-          select: {
+        course: 
+        {
+          select: 
+          {
             id: true,
             title: true,
             price: true,
@@ -111,23 +128,27 @@ export class EnrollmentsService {
     });
   }
 
-  async findOne(id: string) {
+  async findOne(id: string) 
+  {
     const enrollment = await this.prisma.enrollment.findUnique({
       where: { id },
-      include: {
+      include: 
+      {
         user: true,
         course: true,
       },
     });
 
-    if (!enrollment) {
+    if (!enrollment) 
+    {
       throw new NotFoundException('Matrícula não encontrada.');
     }
 
     return enrollment;
   }
 
-  async findByUser(userId: string) {
+  async findByUser(userId: string) 
+  {
     return this.prisma.enrollment.findMany({
       where: { userId },
       include: {
@@ -137,12 +158,14 @@ export class EnrollmentsService {
     });
   }
 
-  async cancel(id: string) {
+  async cancel(id: string) 
+  {
     const enrollment = await this.prisma.enrollment.findUnique({
       where: { id },
     });
 
-    if (!enrollment) {
+    if (!enrollment) 
+    {
       throw new NotFoundException('Matrícula não encontrada.');
     }
 
@@ -151,12 +174,14 @@ export class EnrollmentsService {
     });
   }
 
-  async remove(id: string) {
+  async remove(id: string) 
+  {
     const enrollment = await this.prisma.enrollment.findUnique({
       where: { id },
     });
 
-    if (!enrollment) {
+    if (!enrollment) 
+    {
       throw new NotFoundException('Matrícula não encontrada.');
     }
 
